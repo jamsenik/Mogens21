@@ -1,13 +1,156 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+    font-family: 'Mogens Dice';
+    src: url('Mogens-Dice.woff2') format('woff2'), url('Mogens-Dice.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+    font: 18px arial, sans-serif;
+    margin: 20px;
+}
+
+.board-row:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.status {
+    margin-bottom: 10px;
+}
+*{box-sizing:border-box;}
+
+.felt {
+    background: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 18px;
+    /* max-height: 24px;
+    min-height: 24px; */
+    /* margin-top: 1%; */
+    margin-left: 1%;
+    height: 24px; 
+    vertical-align: top;
+    text-align: center;
+    width: 12%;
+    /* vertical-align: bottom; */
+    box-sizing: border-box;
+    /* box-sizing: content-box; */
+}
+
+.navn {
+    /* border: 1px cornflowerblue solid; */
+     /* width: 12%;  */
+    /* margin: 8pt; */
+    box-sizing: border-box;
+}
+
+.række {
+    width: 99%;
+    /* background: lightpink; */
+    /* max-height: 28px; */
+    margin: 4pt;
+}
+
+
+.square:focus {
+    outline: none;
+}
+
+.kbd-navigation .square:focus {
+    background: #ddd;
+}
+
+.game {
+    display: flex;
+    flex-direction: row;
+}
+
+.game-info {
+    margin-left: 20px;
+}
+
+.etiket {
+    color: black;
+    border: 0px;
+    /* background: darkolivegreen; */
+    text-align: left;
+    width: 14%;
+    display: inline-block;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.brugt {
+    color: whitesmoke;
+}
+
+
+
+.valgt {
+    border: 1px darkblue solid;
+    background: cornflowerblue;
+}
+
+
+.øverst {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    width: 100%;
+    /* max-height: 28px; */
+    padding-bottom: 3pt;
+}
+
+.nederst {
+    width: 100%;
+    /* left: 0; */
+    text-align: center;
+    /* background: wheat; */
+    margin-top: 4px;
+    position: fixed;
+    /* position: -webkit-sticky; */
+    /* position: sticky; */
+    bottom: 0;
+}
+
+.mellemrum {
+    height: 4px;
+    /* background-color: gold; */
+}
+
+.terning {
+    font-family: 'Mogens Dice';
+    font-size: 24pt;
+    background: white;
+    border-style: none;
+    /* margin-left: 4%;
+    margin-right: 4%; */
+    /* background: chocolate; */
+
+}
+
+.knaplinje {
+    /* border-style: dotted; */
+    display: inline-flex;
+    align-content: center;
+}
+
+.slag {
+    /* background-color: teal; */
+    text-align: center;
+    /* border-style: solid; */
+    /* margin-bottom: 1vw;
+    margin-top: 1vw; */
+    font-family: 'Mogens Dice';
+    font-size: 24pt;
+    /* padding: 1vw; */
+    /* height: 6vh; */
+    ;
+}
+
+.blok{
+    /* background-color: darkslateblue; */
 }
