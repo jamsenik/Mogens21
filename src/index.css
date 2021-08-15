@@ -108,11 +108,11 @@ body {
     width: 100%;
     /* left: 0; */
     text-align: center;
-    /* background: wheat; */
+    background: white;
     margin-top: 4px;
-    position: fixed;
-    /* position: -webkit-sticky; */
-    /* position: sticky; */
+    /* position: fixed; */
+    position: -webkit-sticky;
+    position: sticky;
     bottom: 0;
 }
 
