@@ -5,14 +5,16 @@ import { YatzySet } from './yatzy.js';
 
 function Række(props) {
     return (
-        <div className="række">
-            <span className={(props.available ? "etiket" : "etiket brugt")} > {props.Slags}</span>
-            <Felt onClick={() => props.onClick(0)} Value={props.rounds?.[0].toString()}/>
-            <Felt onClick={() => props.onClick(1)} Value={props.rounds?.[1].toString()}/>
-            <Felt onClick={() => props.onClick(2)} Value={props.rounds?.[2].toString()}/>
-            <Felt onClick={() => props.onClick(3)} Value={props.rounds?.[3].toString()}/>
-            <Felt onClick={() => props.onClick(4)} Value={props.rounds?.[4].toString()}/>
-            <Felt onClick={() => props.onClick(5)} Value={props.rounds?.[5].toString()}/>
+        <div className={props.valgt ? "række valgt" : "række"}>
+            <span className={(props.available ? "etiket" : "etiket brugt")} >
+                {props.Slags}
+            </span>
+            <Felt onClick={() => props.onClick(0)} Value={props.rounds?.[0].toString()} />
+            <Felt onClick={() => props.onClick(1)} Value={props.rounds?.[1].toString()} />
+            <Felt onClick={() => props.onClick(2)} Value={props.rounds?.[2].toString()} />
+            <Felt onClick={() => props.onClick(3)} Value={props.rounds?.[3].toString()} />
+            <Felt onClick={() => props.onClick(4)} Value={props.rounds?.[4].toString()} />
+            <Felt onClick={() => props.onClick(5)} Value={props.rounds?.[5].toString()} />
         </div>
     );
 }
@@ -72,6 +74,12 @@ class Board extends React.Component {
         super(props);
         var player = 0;
         let sets = Array(6).fill(null).map(() => new YatzySet(player++));
+        for (let index = 1; index < sets.length; index++) {
+            const left = sets[index-1];
+            const right = sets[index];
+            left.right = right;
+            right.left = left;
+        }
         this.state = {
             YatzySets: sets,
             currentSet: sets[0],
@@ -111,7 +119,7 @@ class Board extends React.Component {
         this.setState(this.state);
     }
 
-    scratch(){
+    scratch() {
         console.log("Scratch");
         this.state.currentRound.scratch();
         this.setState(this.state);
@@ -123,15 +131,18 @@ class Board extends React.Component {
 
     }
 
-    række (round, slags){
-        return <Række Slags={slags} onClick={this.rowFunc(round)} rounds={this.rowRounds(round)} available={this.state.currentSet.rounds[round].blank()}></Række>
+    række(round, slags) {
+        return <Række Slags={slags}
+            onClick={this.rowFunc(round)} rounds={this.rowRounds(round)}
+            available={this.state.currentSet.rounds[round].blank()}
+            valgt={this.state.currentRound == this.state.currentSet.rounds[round]} />
     }
 
     render() {
         return (
             <div>
                 <div className="blok">
-                    <Navne playerId={this.state.currentSet.anders()}/>
+                    <Navne playerId={this.state.currentSet.anders()} />
                     {this.række(0, "1")}
                     {this.række(1, "2")}
                     {this.række(2, "3")}
@@ -181,26 +192,26 @@ const screenfull = require('screenfull');
 
 class FullScreenToggle extends React.Component {
     componentDidMount() {
-      if (screenfull.isEnabled) {
-        screenfull.on('change', () => {
-        //   console.log('Am I fullscreen?', screenfull.isFullscreen ? 'Yes' : 'No');
-        });
-      }
+        if (screenfull.isEnabled) {
+            screenfull.on('change', () => {
+                //   console.log('Am I fullscreen?', screenfull.isFullscreen ? 'Yes' : 'No');
+            });
+        }
     }
-  
+
     // enabling fullscreen has to be done after some user input
     toggleFullScreen = () => {
-      if (screenfull.isEnabled) {
-        screenfull.toggle();
-      }
+        if (screenfull.isEnabled) {
+            screenfull.toggle();
+        }
     }
-  
+
     render() {
-      return (
-        <button className="terning" onClick={this.toggleFullScreen}>&#x26F6; </button>
-      )
+        return (
+            <button className="terning" onClick={this.toggleFullScreen}>&#x26F6; </button>
+        )
     }
-  }
+}
 
 class Game extends React.Component {
 

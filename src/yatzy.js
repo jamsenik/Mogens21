@@ -42,30 +42,31 @@ export class YatzySet {
     //     Rounds.append(PatternRound(pattern: [6], bonus: 100))
     // }
 
-    // func Verify() -> Bool {
-    //     let p = RoundsPlayed()
-    //     if (Left != nil && p != 0){
-    //         let l = Left!.RoundsPlayed()
-    //         if (l != p && l != p + 1) {
-    //             return false
-    //         }
-    //     }
+    verify() {
+        let p = this.roundsPlayed();
+        if (this.left !== null && p != 0){
+            let l = this.left.roundsPlayed()
+            if (l !== p && l !== p + 1) {
+                return false
+            }
+        }
 
 
-    //     if (Right != nil){
-    //         let r = Right!.RoundsPlayed()
-    //         if (r != 0){
-    //             if (r != p - 1 && r != p){
-    //                 return false
-    //             }
-    //         }
-    //     }
-    //     return true
-    // }
+        if (this.right !== null){
+            let r = this.right.roundsPlayed();
+            if (r != 0){
+                if (r !== p - 1 && r !== p){
+                    return false;
+                }
+            }
+        }
+        return true
+    }
 
-    // func RoundsPlayed() -> Int {
-    //     return PlayedRounds().count
-    // }
+    roundsPlayed() {
+        return this.rlayedRounds().length;
+    }
+
     round(i){
         return this.rounds[i];
     }

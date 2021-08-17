@@ -42,9 +42,9 @@ body {
 
 .navn {
     /* border: 1px cornflowerblue solid; */
-     /* width: 12%;  */
+     width: 11.9%; 
     /* margin: 8pt; */
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 }
 
 .række {
@@ -75,7 +75,7 @@ body {
 .etiket {
     color: black;
     border: 0px;
-    /* background: darkolivegreen; */
+    /* background: lightskyblue; */
     text-align: left;
     width: 14%;
     display: inline-block;
@@ -90,8 +90,8 @@ body {
 
 
 .valgt {
-    border: 1px darkblue solid;
-    background: cornflowerblue;
+    /* border: 1px darkblue solid; */
+    background: lightskyblue;
 }
 
 
@@ -114,6 +114,8 @@ body {
     position: -webkit-sticky;
     position: sticky;
     bottom: 0;
+    height: 80pt;
+    vertical-align: text-bottom;
 }
 
 .mellemrum {
@@ -123,7 +125,7 @@ body {
 
 .terning {
     font-family: 'Mogens Dice';
-    font-size: 24pt;
+    font-size: 36pt;
     background: white;
     border-style: none;
     /* margin-left: 4%;
@@ -139,7 +141,7 @@ body {
 }
 
 .slag {
-    /* background-color: teal; */
+    background-color: white;
     text-align: center;
     /* border-style: solid; */
     /* margin-bottom: 1vw;
@@ -147,7 +149,8 @@ body {
     font-family: 'Mogens Dice';
     font-size: 24pt;
     /* padding: 1vw; */
-    /* height: 6vh; */
+    height: 24pt;
+    vertical-align: middle 
     ;
 }
 
