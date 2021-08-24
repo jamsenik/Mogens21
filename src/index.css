@@ -40,6 +40,14 @@ body {
     /* box-sizing: content-box; */
 }
 
+.valgt{
+    background-color: lightsteelblue;
+}
+
+.ufærdig{
+    background-color: yellow;
+}
+
 .navn {
     /* border: 1px cornflowerblue solid; */
      width: 11.9%; 
@@ -87,12 +95,6 @@ body {
     color: whitesmoke;
 }
 
-
-
-.valgt {
-    /* border: 1px darkblue solid; */
-    background: lightskyblue;
-}
 
 
 .øverst {

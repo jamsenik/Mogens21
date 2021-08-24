@@ -44,7 +44,7 @@ export class YatzySet {
 
     verify() {
         let p = this.roundsPlayed();
-        if (this.left !== null && p != 0){
+        if (this.left !== null && p !== 0){
             let l = this.left.roundsPlayed()
             if (l !== p && l !== p + 1) {
                 return false
@@ -54,7 +54,7 @@ export class YatzySet {
 
         if (this.right !== null){
             let r = this.right.roundsPlayed();
-            if (r != 0){
+            if (r !== 0){
                 if (r !== p - 1 && r !== p){
                     return false;
                 }
@@ -163,7 +163,7 @@ class Round {
     }
 
     isIncomplete(){
-        return false;
+        return this.cubes.length > 0 && this.cubes.length < 6;
     }
 }
 
@@ -190,6 +190,10 @@ class UpperRound extends Round {
 
     canBeNext(v){
         return super.canBeNext(v) && v === this.kind;
+    }
+    
+    isIncomplete(){
+        return false;
     }
     
 }

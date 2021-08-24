@@ -5,16 +5,16 @@ import { YatzySet } from './yatzy.js';
 
 function Række(props) {
     return (
-        <div className={props.valgt ? "række valgt" : "række"}>
+        <div className="række">
             <span className={(props.available ? "etiket" : "etiket brugt")} >
                 {props.Slags}
             </span>
-            <Felt onClick={() => props.onClick(0)} Value={props.rounds?.[0].toString()} />
-            <Felt onClick={() => props.onClick(1)} Value={props.rounds?.[1].toString()} />
-            <Felt onClick={() => props.onClick(2)} Value={props.rounds?.[2].toString()} />
-            <Felt onClick={() => props.onClick(3)} Value={props.rounds?.[3].toString()} />
-            <Felt onClick={() => props.onClick(4)} Value={props.rounds?.[4].toString()} />
-            <Felt onClick={() => props.onClick(5)} Value={props.rounds?.[5].toString()} />
+            <Felt onClick={() => props.onClick(0)} Value={props.rounds?.[0].toString()} Valgt={props.currentRound === props.rounds?.[0]} />
+            <Felt onClick={() => props.onClick(1)} Value={props.rounds?.[1].toString()} Valgt={props.currentRound === props.rounds?.[1]}/>
+            <Felt onClick={() => props.onClick(2)} Value={props.rounds?.[2].toString()} Valgt={props.currentRound === props.rounds?.[2]}/>
+            <Felt onClick={() => props.onClick(3)} Value={props.rounds?.[3].toString()} Valgt={props.currentRound === props.rounds?.[3]}/>
+            <Felt onClick={() => props.onClick(4)} Value={props.rounds?.[4].toString()} Valgt={props.currentRound === props.rounds?.[4]}/>
+            <Felt onClick={() => props.onClick(5)} Value={props.rounds?.[5].toString()} Valgt={props.currentRound === props.rounds?.[5]}/>
         </div>
     );
 }
@@ -45,12 +45,12 @@ function Navne(props) {
     return (
         <div className="øverst">
             <span className="etiket"> Navn</span>
-            <input type="text" className={props.playerId === 0 ? "felt navn valgt" : "felt navn"}></input>
-            <input type="text" className={props.playerId === 1 ? "felt navn valgt" : "felt navn"}></input>
-            <input type="text" className={props.playerId === 2 ? "felt navn valgt" : "felt navn"}></input>
-            <input type="text" className={props.playerId === 3 ? "felt navn valgt" : "felt navn"}></input>
-            <input type="text" className={props.playerId === 4 ? "felt navn valgt" : "felt navn"}></input>
-            <input type="text" className={props.playerId === 5 ? "felt navn valgt" : "felt navn"}></input>
+            <input type="text" className="felt navn"></input>
+            <input type="text" className="felt navn"></input>
+            <input type="text" className="felt navn"></input>
+            <input type="text" className="felt navn"></input>
+            <input type="text" className="felt navn"></input>
+            <input type="text" className="felt navn"></input>
         </div>
     );
 }
@@ -60,8 +60,8 @@ function Navne(props) {
 function Felt(props) {
     return (
         <button
-            className="felt"
             onClick={props.onClick}
+            className={props.Valgt ? "felt valgt" : "felt"}
         >
             {props.Value}
         </button>
@@ -88,10 +88,10 @@ class Board extends React.Component {
         }
     }
 
-    handleClick(player, round) {
-        console.log("Call back player: " + player + " round: " + round);
-        var set = this.state.YatzySets[player];
-        var round = set.round(round);
+    handleClick(p, r) {
+        console.log("Call back player: " + p + " round: " + r);
+        var set = this.state.YatzySets[p];
+        var round = set.round(r);
         this.setState({
             YatzySets: this.state.YatzySets,
             currentSet: set,
@@ -135,7 +135,7 @@ class Board extends React.Component {
         return <Række Slags={slags}
             onClick={this.rowFunc(round)} rounds={this.rowRounds(round)}
             available={this.state.currentSet.rounds[round].blank()}
-            valgt={this.state.currentRound == this.state.currentSet.rounds[round]} />
+            currentRound={this.state.currentRound} />
     }
 
     render() {
