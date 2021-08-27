@@ -45,12 +45,12 @@ function Navne(props) {
     return (
         <div className="øverst">
             <span className="etiket"> Navn</span>
-            <input type="text" className="felt navn"></input>
-            <input type="text" className="felt navn"></input>
-            <input type="text" className="felt navn"></input>
-            <input type="text" className="felt navn"></input>
-            <input type="text" className="felt navn"></input>
-            <input type="text" className="felt navn"></input>
+            <input type="text" className={"felt navn" + (props.valid[0] ? "" : " fejl")}></input>
+            <input type="text" className={"felt navn" + (props.valid[1] ? "" : " fejl")}></input>
+            <input type="text" className={"felt navn" + (props.valid[2] ? "" : " fejl")}></input>
+            <input type="text" className={"felt navn" + (props.valid[3] ? "" : " fejl")}></input>
+            <input type="text" className={"felt navn" + (props.valid[4] ? "" : " fejl")}></input>
+            <input type="text" className={"felt navn" + (props.valid[5] ? "" : " fejl")}></input>
         </div>
     );
 }
@@ -77,8 +77,8 @@ class Board extends React.Component {
         for (let index = 1; index < sets.length; index++) {
             const left = sets[index-1];
             const right = sets[index];
-            left.right = right;
-            right.left = left;
+            left.setRight(right);
+            right.setLeft(left);
         }
         this.state = {
             YatzySets: sets,
@@ -142,7 +142,9 @@ class Board extends React.Component {
         return (
             <div>
                 <div className="blok">
-                    <Navne playerId={this.state.currentSet.anders()} />
+                    <Navne playerId={this.state.currentSet.anders()} 
+                           valid={this.state.YatzySets.map(ys => ys.verify())}
+                    />
                     {this.række(0, "1")}
                     {this.række(1, "2")}
                     {this.række(2, "3")}

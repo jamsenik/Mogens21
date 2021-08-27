@@ -21,33 +21,28 @@ export class YatzySet {
         r.push(new Round());
         r.push(new PatternRound([6], 100));
         this.rounds = r;
+        this.left = null;
+        this.right = null;
 
+    }   
+
+    setLeft(l){
+        this.left = l;
     }
-    // init(){
-    //     Rounds = Array()
-    //     for r in 1...6 {
-    //         Rounds.append(UpperRound(kind: r))
-    //     }
-    //     Rounds.append(PatternRound(pattern: [2]))
-    //     Rounds.append(PatternRound(pattern: [2, 2]))
-    //     Rounds.append(PatternRound(pattern: [2, 2, 2]))
-    //     Rounds.append(PatternRound(pattern: [3]))
-    //     Rounds.append(PatternRound(pattern: [4]))
-    //     Rounds.append(PatternRound(pattern: [3, 3]))
-    //     Rounds.append(FixedRound(pattern: [1, 2, 3, 4, 5]))
-    //     Rounds.append(FixedRound(pattern: [2, 3, 4, 5, 6]))
-    //     Rounds.append(FixedRound(pattern: [1, 2, 3, 4, 5, 6], bonus: 9))
-    //     Rounds.append(PatternRound(pattern: [3, 2]))
-    //     Rounds.append(Round())
-    //     Rounds.append(PatternRound(pattern: [6], bonus: 100))
-    // }
+
+    setRight(r){
+        this.right = r;
+    }
+
 
     verify() {
         let p = this.roundsPlayed();
         if (this.left !== null && p !== 0){
-            let l = this.left.roundsPlayed()
+            console.log("Left: " + this.left);
+            let l = this.left.roundsPlayed();
+            console.log("p: " + p + " l: " + l);
             if (l !== p && l !== p + 1) {
-                return false
+                return false;
             }
         }
 
@@ -64,7 +59,7 @@ export class YatzySet {
     }
 
     roundsPlayed() {
-        return this.rlayedRounds().length;
+        return this.playedRounds().length;
     }
 
     round(i){
@@ -85,7 +80,7 @@ export class YatzySet {
     }
 
     playedRounds() {
-        return this.rounds.filter(round => !round.blank()).length;
+        return this.rounds.filter(round => !round.blank());
     }
 
     anders(){

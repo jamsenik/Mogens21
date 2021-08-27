@@ -95,6 +95,10 @@ body {
     color: whitesmoke;
 }
 
+.fejl {
+    background-color: red;
+}
+
 
 
 .øverst {
@@ -116,7 +120,7 @@ body {
     position: -webkit-sticky;
     position: sticky;
     bottom: 0;
-    height: 80pt;
+    height: min(6vw, 36pt);
     vertical-align: text-bottom;
 }
 
@@ -127,7 +131,7 @@ body {
 
 .terning {
     font-family: 'Mogens Dice';
-    font-size: 36pt;
+    font-size: min(6vw, 36pt);
     background: white;
     border-style: none;
     /* margin-left: 4%;
@@ -149,9 +153,9 @@ body {
     /* margin-bottom: 1vw;
     margin-top: 1vw; */
     font-family: 'Mogens Dice';
-    font-size: 24pt;
+    font-size: min(4vw, 24pt);
     /* padding: 1vw; */
-    height: 24pt;
+    height: min(4vw, 24pt);
     vertical-align: middle 
     ;
 }
