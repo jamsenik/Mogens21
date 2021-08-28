@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { YatzySet } from './yatzy.js';
+import { YatzySet } from './yatzy.ts';
 
 function Række(props) {
     return (
