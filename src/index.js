@@ -1,37 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { YatzySet } from './yatzy.ts';
+import { YatzySet } from './YatzySet';
+import { Række } from './Række';
+import { LæsRække } from './LæsRække';
 
-function Række(props) {
-    return (
-        <div className="række">
-            <span className={(props.available ? "etiket" : "etiket brugt")} >
-                {props.Slags}
-            </span>
-            <Felt onClick={() => props.onClick(0)} Value={props.rounds?.[0].toString()} Valgt={props.currentRound === props.rounds?.[0]} />
-            <Felt onClick={() => props.onClick(1)} Value={props.rounds?.[1].toString()} Valgt={props.currentRound === props.rounds?.[1]}/>
-            <Felt onClick={() => props.onClick(2)} Value={props.rounds?.[2].toString()} Valgt={props.currentRound === props.rounds?.[2]}/>
-            <Felt onClick={() => props.onClick(3)} Value={props.rounds?.[3].toString()} Valgt={props.currentRound === props.rounds?.[3]}/>
-            <Felt onClick={() => props.onClick(4)} Value={props.rounds?.[4].toString()} Valgt={props.currentRound === props.rounds?.[4]}/>
-            <Felt onClick={() => props.onClick(5)} Value={props.rounds?.[5].toString()} Valgt={props.currentRound === props.rounds?.[5]}/>
-        </div>
-    );
-}
-
-function LæsRække(props) {
-    return (
-        <div className="række">
-            <span className="etiket"> {props.Slags}</span>
-            <Felt Value={props.Tal[0]}> </Felt>
-            <Felt Value={props.Tal[1]}> </Felt>
-            <Felt Value={props.Tal[2]}> </Felt>
-            <Felt Value={props.Tal[3]}> </Felt>
-            <Felt Value={props.Tal[4]}> </Felt>
-            <Felt Value={props.Tal[5]}> </Felt>
-        </div>
-    );
-}
 
 
 function Mellemrum(props) {
@@ -52,19 +25,6 @@ function Navne(props) {
             <input type="text" className={"felt navn" + (props.valid[4] ? "" : " fejl")}></input>
             <input type="text" className={"felt navn" + (props.valid[5] ? "" : " fejl")}></input>
         </div>
-    );
-}
-
-
-
-function Felt(props) {
-    return (
-        <button
-            onClick={props.onClick}
-            className={props.Valgt ? "felt valgt" : "felt"}
-        >
-            {props.Value}
-        </button>
     );
 }
 
