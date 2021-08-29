@@ -1,4 +1,4 @@
-import {Felt} from './Felt'
+import {ResultatFelt} from './ResultatFelt'
 
 export function LæsRække(props: Props) {
     return (
@@ -15,7 +15,7 @@ export function LæsRække(props: Props) {
 }
 
 function LæsFeltI(i: number, props: Props){
-    return <Felt Value={props.Tal[i].toString()} />;
+    return <ResultatFelt Value={props.Tal[i].toString()} />;
 
 }
 

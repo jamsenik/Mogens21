@@ -20,8 +20,8 @@ export function Række(props: Props) {
 function FeltI(i: number, props: Props) {
     return (
         <Felt onClick={() => props.onClick(i)}
-            Value={props.rounds?.[i].toString()}
-            Valgt={props.currentRound === props.rounds?.[i]} />
+            Round={props.rounds[i]}
+            CurrentRound={props.currentRound}  />
     );
 }
 

@@ -1,41 +1,25 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import { YatzySet } from './YatzySet';
+import { Round, YatzySet } from './YatzySet';
 import { Række } from './Række';
 import { LæsRække } from './LæsRække';
+import { FullScreenToggle } from './FullScreenToggle';
+import { Navne } from "./Navne";
+import { Mellemrum } from "./Mellemrum";
+import { ReactElement } from 'react';
 
-
-
-function Mellemrum(props) {
-    return (
-        <div className="mellemrum">
-        </div>
-    );
-}
-
-function Navne(props) {
-    return (
-        <div className="øverst">
-            <span className="etiket"> Navn</span>
-            <input type="text" className={"felt navn" + (props.valid[0] ? "" : " fejl")}></input>
-            <input type="text" className={"felt navn" + (props.valid[1] ? "" : " fejl")}></input>
-            <input type="text" className={"felt navn" + (props.valid[2] ? "" : " fejl")}></input>
-            <input type="text" className={"felt navn" + (props.valid[3] ? "" : " fejl")}></input>
-            <input type="text" className={"felt navn" + (props.valid[4] ? "" : " fejl")}></input>
-            <input type="text" className={"felt navn" + (props.valid[5] ? "" : " fejl")}></input>
-        </div>
-    );
+interface State {
+    YatzySets: YatzySet[];
+    currentSet: YatzySet;
+    currentRound: Round;
 }
 
 
-class Board extends React.Component {
-    constructor(props) {
+export class Board extends React.Component<{}, State> {
+    constructor(props: {}) {
         super(props);
-        var player = 0;
-        let sets = Array(6).fill(null).map(() => new YatzySet(player++));
+        let sets = Array(6).fill(null).map(() => new YatzySet());
         for (let index = 1; index < sets.length; index++) {
-            const left = sets[index-1];
+            const left = sets[index - 1];
             const right = sets[index];
             left.setRight(right);
             right.setLeft(left);
@@ -44,11 +28,10 @@ class Board extends React.Component {
             YatzySets: sets,
             currentSet: sets[0],
             currentRound: sets[0].round(0),
-
-        }
+        };
     }
 
-    handleClick(p, r) {
+    handleClick(p: number, r: number) {
         console.log("Call back player: " + p + " round: " + r);
         var set = this.state.YatzySets[p];
         var round = set.round(r);
@@ -59,16 +42,16 @@ class Board extends React.Component {
         });
     }
 
-    rowFunc(round) {
-        return (player) => this.handleClick(player, round)
+    rowFunc(round: number): (p: number) => void {
+        return (player) => this.handleClick(player, round);
     }
 
-    rowRounds(i) {
+    rowRounds(i: number): Round[] {
         let result = this.state.YatzySets.map(ys => ys.round(i));
         return result;
     }
 
-    addDice(i) {
+    addDice(i: number) {
         this.state.currentRound.add(i);
         this.setState(this.state);
     }
@@ -86,25 +69,28 @@ class Board extends React.Component {
 
     }
 
-    terning(i) {
-        return <button className="terning" disabled={!this.state.currentRound.canBeNext(i)} onClick={() => this.addDice(i)}>{i}</button>
-
+    terning(i: number) {
+        return (
+            <button className="terning"
+                disabled={!this.state.currentRound.canBeNext(i)}
+                onClick={() => this.addDice(i)}>
+                {i}
+            </button>
+        );
     }
 
-    række(round, slags) {
+    række(round: number, slags: string): ReactElement {
         return <Række Slags={slags}
             onClick={this.rowFunc(round)} rounds={this.rowRounds(round)}
             available={this.state.currentSet.rounds[round].blank()}
-            currentRound={this.state.currentRound} />
+            currentRound={this.state.currentRound} />;
     }
 
     render() {
         return (
             <div>
                 <div className="blok">
-                    <Navne playerId={this.state.currentSet.anders()} 
-                           valid={this.state.YatzySets.map(ys => ys.verify())}
-                    />
+                    <Navne valid={this.state.YatzySets.map(ys => ys.verify())} />
                     {this.række(0, "1")}
                     {this.række(1, "2")}
                     {this.række(2, "3")}
@@ -150,59 +136,3 @@ class Board extends React.Component {
         );
     }
 }
-const screenfull = require('screenfull');
-
-class FullScreenToggle extends React.Component {
-    componentDidMount() {
-        if (screenfull.isEnabled) {
-            screenfull.on('change', () => {
-                //   console.log('Am I fullscreen?', screenfull.isFullscreen ? 'Yes' : 'No');
-            });
-        }
-    }
-
-    // enabling fullscreen has to be done after some user input
-    toggleFullScreen = () => {
-        if (screenfull.isEnabled) {
-            screenfull.toggle();
-        }
-    }
-
-    render() {
-        return (
-            <button className="terning" onClick={this.toggleFullScreen}>&#x26F6; </button>
-        )
-    }
-}
-
-class Game extends React.Component {
-
-    render() {
-        return (
-            <div >
-                <Board />
-            </div>
-        );
-    }
-
-    componentDidMount() {
-        window.addEventListener('beforeunload', this.beforeunload.bind(this));
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('beforeunload', this.beforeunload.bind(this));
-    }
-
-    beforeunload(e) {
-        console.log('Before unload');
-        e.preventDefault();
-        e.returnValue = true;
-    }
-}
-
-// ========================================
-
-ReactDOM.render(
-    <Game />,
-    document.getElementById('root')
-);

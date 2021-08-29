@@ -1,11 +1,9 @@
 export class YatzySet {
-    playerId: number;
     rounds: Round[];
     left: YatzySet | null;
     right: YatzySet | null;
 
-    constructor(playerId: number) {
-        this.playerId = playerId;
+    constructor() {
         let r: Round[] = [new UpperRound(1), new UpperRound(2), new UpperRound(3), new UpperRound(4), new UpperRound(5), new UpperRound(6)];
         r.push(new PatternRound([2]));
         r.push(new PatternRound([2, 2]));
@@ -80,10 +78,6 @@ export class YatzySet {
 
     playedRounds(): Round[] {
         return this.rounds.filter(round => !round.blank());
-    }
-
-    anders() {
-        return this.playerId;
     }
     
 }
