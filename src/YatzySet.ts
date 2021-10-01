@@ -79,7 +79,37 @@ export class YatzySet {
     playedRounds(): Round[] {
         return this.rounds.filter(round => !round.blank());
     }
-    
+
+    allCubes(): RoundState[] {
+        return this.rounds.map(r => {
+            var state: RoundState = {
+                cubes: r.cubes,
+                scratched: r.scrathed
+
+            };
+            return state;
+        });
+    }
+
+    setCubes(rounds: RoundState[]) {
+        for (let index = 0; index < rounds.length; index++) {
+            const element = rounds[index];
+            if (element.scratched) {
+                this.rounds[index].scratch();
+            } else {
+                element.cubes.forEach(cube => {
+                    this.rounds[index].add(cube);
+
+                });
+            }
+        }
+    }
+
+}
+
+export interface RoundState {
+    cubes: number[];
+    scratched: boolean;
 }
 
 export class Round {

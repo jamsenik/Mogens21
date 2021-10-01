@@ -1,8 +1,9 @@
 import React from 'react';
-import { Round, YatzySet } from './YatzySet';
+import { Round, YatzySet, RoundState } from './YatzySet';
 import { Række } from './Række';
 import { LæsRække } from './LæsRække';
 import { FullScreenToggle } from './FullScreenToggle';
+import { ClearBoard } from './ClearBoard';
 import { Navne } from "./Navne";
 import { Mellemrum } from "./Mellemrum";
 import { ReactElement } from 'react';
@@ -17,6 +18,28 @@ interface State {
 export class Board extends React.Component<{}, State> {
     constructor(props: {}) {
         super(props);
+
+        let sets = this.clearSets();
+        let storedStateJson = localStorage.getItem('MogensYatzy');
+        if (storedStateJson !== null) {
+            var allRounds: RoundState[][] = JSON.parse(storedStateJson);
+
+            console.log("Board loaded");
+
+            for (let index = 0; index < allRounds.length; index++) {
+                const element = allRounds[index];
+                sets[index].setCubes(element);
+            }
+
+        }
+        this.state = {
+            YatzySets: sets,
+            currentSet: sets[0],
+            currentRound: sets[0].round(0),
+        };
+    }
+
+    clearSets(): YatzySet[] {
         let sets = Array(6).fill(null).map(() => new YatzySet());
         for (let index = 1; index < sets.length; index++) {
             const left = sets[index - 1];
@@ -24,11 +47,7 @@ export class Board extends React.Component<{}, State> {
             left.setRight(right);
             right.setLeft(left);
         }
-        this.state = {
-            YatzySets: sets,
-            currentSet: sets[0],
-            currentRound: sets[0].round(0),
-        };
+        return sets;
     }
 
     handleClick(p: number, r: number) {
@@ -40,6 +59,7 @@ export class Board extends React.Component<{}, State> {
             currentSet: set,
             currentRound: round
         });
+
     }
 
     rowFunc(round: number): (p: number) => void {
@@ -54,20 +74,43 @@ export class Board extends React.Component<{}, State> {
     addDice(i: number) {
         this.state.currentRound.add(i);
         this.setState(this.state);
+        this.storeBoard();
     }
 
     removeDice() {
         console.log("Back");
         this.state.currentRound.back();
         this.setState(this.state);
+        this.storeBoard();
     }
 
     scratch() {
         console.log("Scratch");
         this.state.currentRound.scratch();
         this.setState(this.state);
+        this.storeBoard();
+    }
+
+    clearBoard() {
+        console.log("Clear board");
+        const sets =  this.clearSets();
+        this.setState({
+            YatzySets: sets,
+            currentSet: sets[0],
+            currentRound: sets[0].round(0),
+        });
+        this.storeBoard(sets);
 
     }
+
+    storeBoard(sets: YatzySet[] | null = null) {
+        console.log("Store board");
+        if (sets == null){
+            sets = this.state.YatzySets;
+        }
+        localStorage.setItem("MogensYatzy", JSON.stringify(sets.map(ys => ys.allCubes())));
+    }
+
 
     terning(i: number) {
         return (
@@ -85,6 +128,8 @@ export class Board extends React.Component<{}, State> {
             available={this.state.currentSet.rounds[round].blank()}
             currentRound={this.state.currentRound} />;
     }
+
+
 
     render() {
         return (
@@ -114,7 +159,6 @@ export class Board extends React.Component<{}, State> {
                     {this.række(17, "Yatzy")}
                     <Mellemrum />
                     <LæsRække Slags="Total" Tal={this.state.YatzySets.map(ys => ys.score())}></LæsRække>
-
                 </div>
                 <div className="nederst">
                     <div className="slag">
@@ -130,6 +174,7 @@ export class Board extends React.Component<{}, State> {
                         <button className="terning" onClick={() => this.scratch()}>X</button>
                         <button className="terning" disabled={this.state.currentRound.blank()} onClick={() => this.removeDice()}>&lt;</button>
                         <FullScreenToggle />
+                        <ClearBoard  onClick={() => this.clearBoard()}/>
                     </div>
                 </div>
             </div>
