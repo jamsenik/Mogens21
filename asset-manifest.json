@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/Mogens21/static/css/main.d4abc98e.chunk.css",
-    "main.js": "/Mogens21/static/js/main.caa8bba3.chunk.js",
-    "main.js.map": "/Mogens21/static/js/main.caa8bba3.chunk.js.map",
+    "main.js": "/Mogens21/static/js/main.c91f9b2f.chunk.js",
+    "main.js.map": "/Mogens21/static/js/main.c91f9b2f.chunk.js.map",
     "runtime-main.js": "/Mogens21/static/js/runtime-main.688cb123.js",
     "runtime-main.js.map": "/Mogens21/static/js/runtime-main.688cb123.js.map",
-    "static/js/2.beb4dcdf.chunk.js": "/Mogens21/static/js/2.beb4dcdf.chunk.js",
-    "static/js/2.beb4dcdf.chunk.js.map": "/Mogens21/static/js/2.beb4dcdf.chunk.js.map",
+    "static/js/2.7cfcf56d.chunk.js": "/Mogens21/static/js/2.7cfcf56d.chunk.js",
+    "static/js/2.7cfcf56d.chunk.js.map": "/Mogens21/static/js/2.7cfcf56d.chunk.js.map",
     "index.html": "/Mogens21/index.html",
     "static/css/main.d4abc98e.chunk.css.map": "/Mogens21/static/css/main.d4abc98e.chunk.css.map",
-    "static/js/2.beb4dcdf.chunk.js.LICENSE.txt": "/Mogens21/static/js/2.beb4dcdf.chunk.js.LICENSE.txt",
+    "static/js/2.7cfcf56d.chunk.js.LICENSE.txt": "/Mogens21/static/js/2.7cfcf56d.chunk.js.LICENSE.txt",
     "static/media/index.css": "/Mogens21/static/media/Mogens-Dice.b647f224.woff2"
   },
   "entrypoints": [
     "static/js/runtime-main.688cb123.js",
-    "static/js/2.beb4dcdf.chunk.js",
+    "static/js/2.7cfcf56d.chunk.js",
     "static/css/main.d4abc98e.chunk.css",
-    "static/js/main.caa8bba3.chunk.js"
+    "static/js/main.c91f9b2f.chunk.js"
   ]
 }
