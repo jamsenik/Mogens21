@@ -26,15 +26,15 @@ body {
     background: white;
     border: 1px solid black;
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 2vh;
     /* max-height: 24px;
     min-height: 24px; */
     /* margin-top: 1%; */
     margin-left: 1%;
-    height: 24px; 
+    height: 3vh;
     vertical-align: top;
     text-align: center;
-    width: 12%;
+    width: 13%;
     /* vertical-align: bottom; */
     box-sizing: border-box;
     /* box-sizing: content-box; */
@@ -50,7 +50,7 @@ body {
 
 .navn {
     /* border: 1px cornflowerblue solid; */
-     width: 11.9%; 
+     width: 12.8%; 
     /* margin: 8pt; */
     /* box-sizing: border-box; */
 }
@@ -59,7 +59,7 @@ body {
     width: 99%;
     /* background: lightpink; */
     /* max-height: 28px; */
-    margin: 4pt;
+    padding-bottom: 2pt;
 }
 
 
@@ -131,7 +131,7 @@ body {
 
 .terning {
     font-family: 'Mogens Dice';
-    font-size: min(6vw, 36pt);
+    font-size: min(6vw, 30pt);
     background: white;
     border-style: none;
     /* margin-left: 4%;
@@ -150,12 +150,12 @@ body {
     background-color: white;
     text-align: center;
     /* border-style: solid; */
-    /* margin-bottom: 1vw;
-    margin-top: 1vw; */
+    padding-bottom: 2vh;
+    padding-top: 2vh; 
     font-family: 'Mogens Dice';
-    font-size: min(4vw, 24pt);
+    font-size: min(6vw, 1.5cm);
     /* padding: 1vw; */
-    height: min(4vw, 24pt);
+    /*height: min(4vw, 24pt);*/
     vertical-align: middle 
     ;
 }

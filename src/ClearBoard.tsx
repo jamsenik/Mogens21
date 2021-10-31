@@ -1,9 +1,15 @@
 import React from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { SpeedDialAction } from '@mui/material';
 
 export function ClearBoard(props: Props)  {
     
         return (
-            <button className="terning" onClick={() => bekræft(props.onClick)}>&#x2622; </button>
+            <SpeedDialAction
+            onClick={() => bekræft(props.onClick)}
+            tooltipTitle="Clear board"
+            icon={<DeleteIcon />} />
+
         );
 
     }
