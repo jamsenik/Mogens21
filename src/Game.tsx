@@ -3,9 +3,9 @@ import { Round, YatzySet, RoundState } from './YatzySet';
 import { Række } from './Række';
 import { LæsRække } from './LæsRække';
 import { Navne } from "./Navne";
-import { Mellemrum } from "./Mellemrum";
 import { ReactElement } from 'react';
 import { ButtonBar } from './ButtonBar';
+import { Paper, Table, TableBody, TableContainer } from '@mui/material';
 
 
 
@@ -135,44 +135,45 @@ export class Game extends React.Component<{}, State> {
     render() {
         return (
             <div>
-                <div className="blok">
-                    <Navne valid={this.state.YatzySets.map(ys => ys.verify())} />
-                    {this.række(0, "1")}
-                    {this.række(1, "2")}
-                    {this.række(2, "3")}
-                    {this.række(3, "4")}
-                    {this.række(4, "5")}
-                    {this.række(5, "6")}
-                    <Mellemrum />
-                    <LæsRække Slags="Bonus" Tal={this.state.YatzySets.map(ys => ys.bonus())}></LæsRække>
-                    <Mellemrum />
-                    {this.række(6, "1 par")}
-                    {this.række(7, "2 par")}
-                    {this.række(8, "3 par")}
-                    {this.række(9, "3 ens")}
-                    {this.række(10, "4 ens")}
-                    {this.række(11, "2 x 3 ens")}
-                    {this.række(12, "Lav")}
-                    {this.række(13, "Høj")}
-                    {this.række(14, "Cameron")}
-                    {this.række(15, "Hus")}
-                    {this.række(16, "Chance")}
-                    {this.række(17, "Yatzy")}
-                    <Mellemrum />
-                    <LæsRække Slags="Total" Tal={this.state.YatzySets.map(ys => ys.score())}></LæsRække>
-                </div>
+                <TableContainer component={Paper}>
+                    <Table size="small" sx={{ minWidth: 200 }} aria-label="simple table">
+                        <Navne valid={this.state.YatzySets.map(ys => ys.verify())} />
+                        <TableBody>
+                            {this.række(0, "1")}
+                            {this.række(1, "2")}
+                            {this.række(2, "3")}
+                            {this.række(3, "4")}
+                            {this.række(4, "5")}
+                            {this.række(5, "6")}
+                            <LæsRække Slags="Bonus" Tal={this.state.YatzySets.map(ys => ys.bonus())}></LæsRække>
+                            {this.række(6, "1 par")}
+                            {this.række(7, "2 par")}
+                            {this.række(8, "3 par")}
+                            {this.række(9, "3 ens")}
+                            {this.række(10, "4 ens")}
+                            {this.række(11, "2 x 3 ens")}
+                            {this.række(12, "Lav")}
+                            {this.række(13, "Høj")}
+                            {this.række(14, "Cameron")}
+                            {this.række(15, "Hus")}
+                            {this.række(16, "Chance")}
+                            {this.række(17, "Yatzy")}
+                            <LæsRække Slags="Total" Tal={this.state.YatzySets.map(ys => ys.score())}></LæsRække>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
                 <div className="nederst">
                     <div className="slag">
                         {this.state.currentRound.toArray()}
                     </div>
-                    
+
                 </div>
                 <ButtonBar diceClick={(i: number) => { this.addDice(i) }}
                     diceEnabled={i => this.state.currentRound.canBeNext(i)}
                     backspace={() => this.removeDice()}
                     scratch={() => this.scratch()}
-                    clear={()=> this.clearBoard()}
- />
+                    clear={() => this.clearBoard()}
+                />
 
             </div>
         );

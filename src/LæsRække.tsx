@@ -1,16 +1,23 @@
 import {ResultatFelt} from './ResultatFelt'
+import { TableCell, TableRow } from '@mui/material';
 
 export function LæsRække(props: Props) {
     return (
-        <div className="række">
-            <span className="etiket"> {props.Slags}</span>
-            {LæsFeltI(0,props)}
-            {LæsFeltI(1,props)}
-            {LæsFeltI(2,props)}
-            {LæsFeltI(3,props)}
-            {LæsFeltI(4,props)}
-            {LæsFeltI(5,props)}
-        </div>
+        <TableRow
+        >
+            <TableCell align="left">
+                {props.Slags}
+            </TableCell>
+            {LæsFeltI(0 , props)}
+            {LæsFeltI(1 , props)}
+            {LæsFeltI(2 , props)}
+            {LæsFeltI(3 , props)}
+            {LæsFeltI(4 , props)}
+            {LæsFeltI(5 , props)}
+
+
+        </TableRow>
+
     );
 }
 

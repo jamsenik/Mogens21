@@ -13,7 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import Clear from './Clear';
 
-const size = "min(6vw, 1.5cm)"
+const size = "min(6vw, 1cm)"
 const screenfull = require('screenfull');
 
 export function ButtonBar(props: Props) {
@@ -88,12 +88,6 @@ function Dice(i: number, props: Props) {
     >
         {i}
     </Button>);
-}
-
-function bekræft(clear: () => void) {
-    if (window.confirm("Ægte?")) {
-        clear();
-    }
 }
 
 interface Props {

@@ -1,13 +1,18 @@
+import { Button, TableCell } from '@mui/material';
 import { Round } from './YatzySet'
 
 export function Felt(props: Props) {
     return (
-        <button
-            onClick={props.onClick}
-            className={"felt" + (props.Round === props.CurrentRound ? " valgt" : "")}
-        >
-            {props.Round?.toString()}
-        </button>
+        <TableCell sx={{paddingX:0, paddingY:0, minWidth: "10px"}}>
+            <Button onClick={props.onClick} 
+            variant={props.Round === props.CurrentRound ? "contained" : "text"}
+            sx={{padding: 0, minWidth: 0}}
+            fullWidth = {true}
+            size="small"
+            >
+            {props.Round?.toString()+" "}
+            </Button>
+        </TableCell>
     );
 }
 

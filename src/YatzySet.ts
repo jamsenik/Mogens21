@@ -163,7 +163,7 @@ export class Round {
             return "X";
         }
         if (this.blank()) {
-            return "";
+            return "\xa0";
         }
         return this.score().toString();
     }
