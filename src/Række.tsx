@@ -6,10 +6,12 @@ import { Round } from './YatzySet'
 export function Række(props: Props) {
     return (
         <TableRow selected = {props.rounds.some(r => r === props.currentRound)}
+                 sx={{}}
         >
             <TableCell align="left"
                 sx={{ color: props.available ? 'text.primary' : 'ghostwhite', 
-                      paddingY:"4px"
+                      paddingY:"0px",
+                      fontSize: "2.3vh"
             }}
             >
                 {props.Slags}

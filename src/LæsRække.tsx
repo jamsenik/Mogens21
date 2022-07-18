@@ -5,7 +5,9 @@ export function LæsRække(props: Props) {
     return (
         <TableRow
         >
-            <TableCell align="left">
+            <TableCell align="left"
+             sx={{ paddingY:"2px", fontSize: "2.2vh"}} 
+            >
                 {props.Slags}
             </TableCell>
             {LæsFeltI(0 , props)}

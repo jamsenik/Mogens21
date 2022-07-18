@@ -7,13 +7,13 @@ interface Props {
 }
 
 function Navn(i: number, props: Props) {
-    return <TableCell sx={{paddingX:"1px", paddingY:"1px", minWidth: "10px", paddingTop: 0}}>
+    return <TableCell sx={{paddingX:"2px", paddingY:"px", minWidth: "10px", paddingTop: 0, maxHeight: "2vh"}}>
         <TextField
             variant="filled"
             defaultValue={"Spiller " + (i + 1)}
             error={!props.valid[i]}
-            size = "small"
             helperText={!props.valid[i] ? "FEJL" : ""}
+            size="small"
             onFocus={event => {
                 event.target.select();
               }}
@@ -32,7 +32,7 @@ export function Navne(props: Props) {
     return (
         <TableHead>
             <TableRow>
-                <TableCell size="small" sx={{paddingX:"1px", paddingY:"1px", minWidth: "10px"}}/>
+                <TableCell sx={{paddingX:"1px", paddingY:"0px", minWidth: "10px", maxHeight: "1vh"}}/>
                 {Navn(0, props)}
                 {Navn(1, props)}
                 {Navn(2, props)}

@@ -6,6 +6,7 @@ import { Navne } from "./Navne";
 import { ReactElement } from 'react';
 import { ButtonBar } from './ButtonBar';
 import { Paper, Table, TableBody, TableContainer } from '@mui/material';
+import { ShortCuts } from './ShortCuts';
 
 
 
@@ -73,9 +74,11 @@ export class Game extends React.Component<{}, State> {
     }
 
     addDice(i: number) {
-        this.state.currentRound.add(i);
-        this.setState(this.state);
-        this.storeBoard();
+        if (this.state.currentRound.canBeNext(i)) {
+            this.state.currentRound.add(i);
+            this.setState(this.state);
+            this.storeBoard();
+        }
     }
 
     removeDice() {
@@ -123,6 +126,15 @@ export class Game extends React.Component<{}, State> {
         );
     }
 
+    next(){
+        const nextSet = this.state.currentSet.right ?? this.state.YatzySets[0];
+        this.setState({
+            YatzySets: this.state.YatzySets,
+            currentSet: nextSet,
+            currentRound: nextSet.rounds.find(r => r.blank()) ?? nextSet.rounds[0]
+        });
+    }
+
     række(round: number, slags: string): ReactElement {
         return <Række Slags={slags}
             onClick={this.rowFunc(round)} rounds={this.rowRounds(round)}
@@ -135,6 +147,14 @@ export class Game extends React.Component<{}, State> {
     render() {
         return (
             <div>
+                <ShortCuts diceClick={(i: number) => { this.addDice(i) }}
+                    // diceEnabled={i => this.state.currentRound.canBeNext(i)}
+                    backspace={() => this.removeDice()}
+                // scratch={() => this.scratch()}
+                // clear={() => this.clearBoard()}
+                next={() => this.next()}
+                />
+
                 <TableContainer component={Paper}>
                     <Table size="small" sx={{ minWidth: 200 }} aria-label="simple table">
                         <Navne valid={this.state.YatzySets.map(ys => ys.verify())} />
@@ -174,7 +194,6 @@ export class Game extends React.Component<{}, State> {
                     scratch={() => this.scratch()}
                     clear={() => this.clearBoard()}
                 />
-
             </div>
         );
     }
