@@ -107,6 +107,13 @@ export class YatzySet {
 
 }
 
+export interface GameState {
+    names: string[];
+    rounds: RoundState[][];
+    currentPlayer: number;
+    currentRound: number;
+}
+
 export interface RoundState {
     cubes: number[];
     scratched: boolean;

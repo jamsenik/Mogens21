@@ -1,5 +1,5 @@
 import React from 'react';
-import { Round, YatzySet, RoundState } from './YatzySet';
+import { Round, YatzySet, RoundState, GameState } from './YatzySet';
 import { Række } from './Række';
 import { LæsRække } from './LæsRække';
 import { Navne } from "./Navne";
@@ -7,6 +7,7 @@ import { ReactElement } from 'react';
 import { ButtonBar } from './ButtonBar';
 import { Paper, Table, TableBody, TableContainer } from '@mui/material';
 import { ShortCuts } from './ShortCuts';
+import { GetRemoteState, StoreRemoteState } from './RemoteState';
 
 
 
@@ -14,31 +15,40 @@ interface State {
     YatzySets: YatzySet[];
     currentSet: YatzySet;
     currentRound: Round;
+    names: string[];
 }
 
 
 export class Game extends React.Component<{}, State> {
     constructor(props: {}) {
         super(props);
-
-        let sets = this.clearSets();
-        let storedStateJson = localStorage.getItem('MogensYatzy');
-        if (storedStateJson !== null) {
-            var allRounds: RoundState[][] = JSON.parse(storedStateJson);
-
-            console.log("Board loaded");
-
-            for (let index = 0; index < allRounds.length; index++) {
-                const element = allRounds[index];
-                sets[index].setCubes(element);
-            }
-
-        }
+        let emptySets = this.clearSets();
         this.state = {
-            YatzySets: sets,
-            currentSet: sets[0],
-            currentRound: sets[0].round(0),
-        };
+            YatzySets: emptySets,
+            currentSet: emptySets[0],
+            currentRound: emptySets[0].round(0),
+            names: Array(6).map((v,i) => "Spiller " + (i+1))
+        };       
+
+        GetRemoteState(
+             game => {
+                 const allRounds = game.rounds;
+                 console.log("As promised: ", allRounds);
+                 
+                 let storedSets = this.clearSets();
+                for (let index = 0; index < allRounds.length; index++) {
+                    const element = allRounds[index];
+                    storedSets[index].setCubes(element);
+                }
+                this.setState(
+                    {
+                        YatzySets: storedSets,
+                        currentSet: storedSets[game.currentPlayer],
+                        currentRound: storedSets[game.currentPlayer].round(game.currentRound),
+                    }
+                );
+             }
+        );
     }
 
     clearSets(): YatzySet[] {
@@ -112,7 +122,13 @@ export class Game extends React.Component<{}, State> {
         if (sets == null) {
             sets = this.state.YatzySets;
         }
-        localStorage.setItem("MogensYatzy", JSON.stringify(sets.map(ys => ys.allCubes())));
+        const rounds = sets.map(ys => ys.allCubes());
+        const state = {} as GameState;
+        state.names = this.state.names;
+        state.rounds = rounds;
+        state.currentPlayer = this.state.YatzySets.findIndex(ys => ys === this.state.currentSet);
+        state.currentRound = this.state.currentSet.rounds.findIndex(round => round === this.state.currentRound);
+        StoreRemoteState(state);
     }
 
 
@@ -120,13 +136,13 @@ export class Game extends React.Component<{}, State> {
         return (
             <button className="terning"
                 disabled={!this.state.currentRound.canBeNext(i)}
-                onClick={() => this.addDice(i)}>
+                onClick={() => this.addDice(i)}>,
                 {i}
             </button>
         );
     }
 
-    next(){
+    next() {
         const nextSet = this.state.currentSet.right ?? this.state.YatzySets[0];
         this.setState({
             YatzySets: this.state.YatzySets,
@@ -150,14 +166,15 @@ export class Game extends React.Component<{}, State> {
                 <ShortCuts diceClick={(i: number) => { this.addDice(i) }}
                     // diceEnabled={i => this.state.currentRound.canBeNext(i)}
                     backspace={() => this.removeDice()}
-                // scratch={() => this.scratch()}
-                // clear={() => this.clearBoard()}
-                next={() => this.next()}
+                    // scratch={() => this.scratch()}
+                    // clear={() => this.clearBoard()}
+                    next={() => this.next()}
                 />
 
                 <TableContainer component={Paper}>
                     <Table size="small" sx={{ minWidth: 200 }} aria-label="simple table">
-                        <Navne valid={this.state.YatzySets.map(ys => ys.verify())} />
+                        <Navne valid={this.state.YatzySets.map(ys => ys.verify())} 
+                                names={this.state.names}/>
                         <TableBody>
                             {this.række(0, "1")}
                             {this.række(1, "2")}

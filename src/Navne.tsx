@@ -4,13 +4,14 @@ import React from 'react';
 
 interface Props {
     valid: boolean[];
+    names: string[];
 }
 
 function Navn(i: number, props: Props) {
     return <TableCell sx={{paddingX:"2px", paddingY:"px", minWidth: "10px", paddingTop: 0, maxHeight: "2vh"}}>
         <TextField
             variant="filled"
-            defaultValue={"Spiller " + (i + 1)}
+            defaultValue={props.names[i]}
             error={!props.valid[i]}
             helperText={!props.valid[i] ? "FEJL" : ""}
             size="small"
