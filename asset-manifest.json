@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Mogens21/static/css/main.b5bfdb2a.chunk.css",
-    "main.js": "/Mogens21/static/js/main.9d574c96.chunk.js",
-    "main.js.map": "/Mogens21/static/js/main.9d574c96.chunk.js.map",
+    "main.js": "/Mogens21/static/js/main.69061738.chunk.js",
+    "main.js.map": "/Mogens21/static/js/main.69061738.chunk.js.map",
     "runtime-main.js": "/Mogens21/static/js/runtime-main.f8d49cf5.js",
     "runtime-main.js.map": "/Mogens21/static/js/runtime-main.f8d49cf5.js.map",
     "static/js/2.097d125d.chunk.js": "/Mogens21/static/js/2.097d125d.chunk.js",
@@ -16,6 +16,6 @@
     "static/js/runtime-main.f8d49cf5.js",
     "static/js/2.097d125d.chunk.js",
     "static/css/main.b5bfdb2a.chunk.css",
-    "static/js/main.9d574c96.chunk.js"
+    "static/js/main.69061738.chunk.js"
   ]
 }
