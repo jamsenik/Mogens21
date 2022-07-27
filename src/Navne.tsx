@@ -5,13 +5,15 @@ import React from 'react';
 interface Props {
     valid: boolean[];
     names: string[];
+    updateName: (name: string, index: number) => void;
 }
 
 function Navn(i: number, props: Props) {
+    const theName = props.names[i];
     return <TableCell sx={{paddingX:"2px", paddingY:"px", minWidth: "10px", paddingTop: 0, maxHeight: "2vh"}}>
         <TextField
             variant="filled"
-            defaultValue={props.names[i]}
+            value={theName}
             error={!props.valid[i]}
             helperText={!props.valid[i] ? "FEJL" : ""}
             size="small"
@@ -23,8 +25,9 @@ function Navn(i: number, props: Props) {
                   padding: 5
                 }
              }}
+             onChange={ e => props.updateName(e.target.value, i)}
 
-        />
+        >  </TextField>
     </TableCell>
 
 }
