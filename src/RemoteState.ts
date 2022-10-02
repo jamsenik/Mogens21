@@ -1,7 +1,8 @@
 
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, getDoc, setDoc, doc, onSnapshot } from 'firebase/firestore';
-import { GameState, RoundState, YatzySet } from './YatzySet';
+import { getFirestore, setDoc, doc, onSnapshot, Unsubscribe } from 'firebase/firestore';
+import { GetIpAddress } from './IpAddress';
+import { GameState, RoundState } from './YatzySet';
 
 const fbapp = initializeApp({
     apiKey: "AIzaSyDXKRP_mnNEJF5wkWkZ0fGFmPUAIZvE7Js",
@@ -12,43 +13,56 @@ const fbapp = initializeApp({
     appId: "1:290609839228:web:94a29c55cb630c9df49df9"
 })
 
-export const db = getFirestore(fbapp);
+const db = getFirestore(fbapp);
+var documentName = "empty";
+GetIpAddress().then(s => documentName = s);
+var unsub: Unsubscribe;
 
-export function GetRemoteState(callback: (game: GameState) => void) {
-    // console.log("Getting from fire");
-    const unsub = onSnapshot(doc(db, "YatzySets", "shared"), (doc) => {
-        const data = doc.data();
-        if (data === undefined){
-            return;
+export function ListenToRemoteState(callback: (game: GameState) => void) {
+    console.log("Group is IP");     
+    const roundState: RoundState = {
+        cubes: Array<number>(0),
+        scratched: false
+    }  
+    const newState: GameState = {
+        names: Array<string>(6).fill("Spiller"),
+        rounds: Array(6).fill(Array(17).fill(roundState)),
+        currentPlayer: 0,
+        currentRound: 0
+    };
+    console.log("New state: ", newState);
+    GetIpAddress().then(documentName => subscribe(documentName, newState, callback));
+}
+
+export function ListenToRemoteStateUpdate(callback: (game: GameState) => void, currentState: GameState, groupname: string ) {
+        console.log("Group is", groupname);
+        documentName = groupname;
+        subscribe(groupname, currentState, callback );
+}
+
+function subscribe(documentName: string, currentState: GameState, callback: (game: GameState) => void){
+        var d = doc(db, "YatzySets", documentName);
+        if (unsub !== undefined){
+            console.log("Already subscribed");
+            unsub();
         }
-        const state = JSON.parse(data.state) as GameState;
-        console.log("Current state: ", state);
-        callback(state);
+        unsub = onSnapshot(d, (doc) => {
+            const data = doc.data();    
+            if (data === undefined) {
+                console.log("No existing document");
+                
+                callback(currentState);
+                return;
+            }
+            console.log("Existing document: ", doc);
+            const state = JSON.parse(data.state) as GameState;
+            callback(state);
 
-        // const state = Array<RoundState[]>(0);
-        // Object.keys(data).forEach((key) => {
-        //     const subdata = data[key]
-        //     const subarray: RoundState[] = [];
-        //     Object.keys(subdata).forEach((subkey) => {
-        //         var roundState = subdata[subkey] as RoundState;
-        //         subarray.push(roundState);
-        //     });
-        //     state.push(subarray);
-        // });
-        // console.log(state);
-    
-        // callback(state);
-        //var allRounds: RoundState[][] = data;
-        //console.log(allRounds);
-    });
-
-    
-        
-    console.log("Done with fire");
+        });
 }
 
 export async function StoreRemoteState(state: GameState) {
-    await setDoc(doc(db, "YatzySets", "shared"), { state: JSON.stringify(state) });
+    await setDoc(doc(db, "YatzySets", documentName), { state: JSON.stringify(state) });
 }
 
 

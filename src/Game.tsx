@@ -1,5 +1,5 @@
 import React from 'react';
-import { Round, YatzySet, RoundState, GameState } from './YatzySet';
+import { Round, YatzySet, GameState } from './YatzySet';
 import { Række } from './Række';
 import { LæsRække } from './LæsRække';
 import { Navne } from "./Navne";
@@ -7,8 +7,7 @@ import { ReactElement } from 'react';
 import { ButtonBar } from './ButtonBar';
 import { Paper, Table, TableBody, TableContainer } from '@mui/material';
 import { ShortCuts } from './ShortCuts';
-import { GetRemoteState, StoreRemoteState } from './RemoteState';
-import { StatsBase } from 'fs';
+import { ListenToRemoteState, ListenToRemoteStateUpdate, StoreRemoteState } from './RemoteState';
 
 
 
@@ -17,58 +16,64 @@ interface State {
     currentSet: number;
     currentRound: number;
     names: string[];
+    groupName?: string;
+}
+
+function clearSets(): YatzySet[] {
+    let sets = Array(6).fill(null).map(() => new YatzySet());
+    for (let index = 1; index < sets.length; index++) {
+        const left = sets[index - 1];
+        const right = sets[index];
+        left.setRight(right);
+        right.setLeft(left);
+    }
+    return sets;
 }
 
 
 export class Game extends React.Component<{}, State> {
     constructor(props: {}) {
         super(props);
-        let emptySets = this.clearSets();
+        let emptySets = clearSets();
         const names = ["Spiller 1", "Spiller 2", "Spiller 3", "Spiller 4", "Spiller 5", "Spiller 6"];
         this.state = {
             YatzySets: emptySets,
             currentSet: 0,
             currentRound: 0,
-            names: names
+            names: names,
+            groupName: undefined
         };
 
-        GetRemoteState(
-            game => {
-                const allRounds = game.rounds;
-                console.log("As promised: ", allRounds);
+        ListenToRemoteState((game: GameState) => this.updateState(game));
+        console.log("End of constructor", this);
+        
+    }
 
-                let storedSets = this.clearSets();
-                for (let index = 0; index < allRounds.length; index++) {
-                    const element = allRounds[index];
-                    storedSets[index].setCubes(element);
-                }
-                this.setState(
-                    {
-                        YatzySets: storedSets,
-                        currentSet: game.currentPlayer,
-                        currentRound: game.currentRound,
-                        names: game.names
-                    }
-                );
+    updateState(game: GameState) {
+        const allRounds = game.rounds;
+        console.log("As promised: ", game);
+
+        let storedSets = clearSets();
+        for (let index = 0; index < allRounds.length; index++) {
+            const element = allRounds[index];
+            storedSets[index].setCubes(element);
+        }
+        this.setState(
+            {
+                YatzySets: storedSets,
+                currentSet: game.currentPlayer,
+                currentRound: game.currentRound,
+                names: game.names
             }
         );
+
     }
 
-    clearSets(): YatzySet[] {
-        let sets = Array(6).fill(null).map(() => new YatzySet());
-        for (let index = 1; index < sets.length; index++) {
-            const left = sets[index - 1];
-            const right = sets[index];
-            left.setRight(right);
-            right.setLeft(left);
-        }
-        return sets;
-    }
 
     handleClick(p: number, r: number) {
         console.log("Call back player: " + p + " round: " + r);
         var set = this.state.YatzySets[p];
-        var round = set.round(r);
+        set.round(r);
         const newState = {
             YatzySets: this.state.YatzySets,
             currentSet: p,
@@ -76,8 +81,8 @@ export class Game extends React.Component<{}, State> {
             names: this.state.names
 
         } as State;
-        this.setState(newState);
-        this.storeBoard(newState);
+        this.setState(newState, () => this.storeBoard());
+        
     }
 
     rowFunc(round: number): (p: number) => void {
@@ -90,61 +95,68 @@ export class Game extends React.Component<{}, State> {
     }
 
     addDice(i: number) {
-        const currentRound = this.state.YatzySets[this.state.currentSet].round(this.state.currentRound);  
+        const currentRound = this.state.YatzySets[this.state.currentSet].round(this.state.currentRound);
         if (currentRound.canBeNext(i)) {
             currentRound.add(i);
-            this.setState(this.state);
-            this.storeBoard(this.state);
+            this.setState(this.state, () => this.storeBoard());
         }
     }
 
     removeDice() {
         console.log("Back");
-        const currentRound = this.state.YatzySets[this.state.currentSet].round(this.state.currentRound);  
+        const currentRound = this.state.YatzySets[this.state.currentSet].round(this.state.currentRound);
         currentRound.back();
-        this.setState(this.state);
-        this.storeBoard(this.state);
+        this.setState(this.state, () => this.storeBoard());
     }
 
     scratch() {
         console.log("Scratch");
-        const currentRound = this.state.YatzySets[this.state.currentSet].round(this.state.currentRound);  
+        const currentRound = this.state.YatzySets[this.state.currentSet].round(this.state.currentRound);
         currentRound.scratch();
-        this.setState(this.state);
-        this.storeBoard(this.state);
+        this.setState(this.state, () => this.storeBoard());
     }
 
     clearBoard() {
         console.log("Clear board");
-        const sets = this.clearSets();
+        const sets = clearSets();
         const newState = {
             YatzySets: sets,
             currentSet: 0,
             currentRound: 0,
             names: this.state.names
         } as State;
-        this.setState(newState);
-        this.storeBoard(newState);
+        this.setState(newState, () => this.storeBoard());
     }
 
     updateName(name: string, index: number) {
-        this.state.names[index] = name;
-        this.setState(this.state);
-        this.storeBoard(this.state);
+        const newState = { ...this.state }
+        newState.names[index] = name;
+        this.setState(newState, () => this.storeBoard());
     }
 
-    storeBoard(state: State) {
-        console.log("Store board");
+    updateGroupName(name: string) {
+        ListenToRemoteStateUpdate(g => this.updateState(g), this.getState(), name);
+        const newState = { ...this.state }
+        newState.groupName = name;
+        this.setState(newState);
+    }
 
-        const sets = state.YatzySets;
+    storeBoard() {
+        console.log("Store board");
+        const state = this.getState();
+        StoreRemoteState(state);
+    }
+
+    getState(): GameState {
+        const sets = this.state.YatzySets;
 
         const rounds = sets.map(ys => ys.allCubes());
         const statedto = {} as GameState;
-        statedto.names = state.names;
+        statedto.names = this.state.names;
         statedto.rounds = rounds;
-        statedto.currentPlayer = state.currentSet;
-        statedto.currentRound = state.currentRound;
-        StoreRemoteState(statedto);
+        statedto.currentPlayer = this.state.currentSet;
+        statedto.currentRound = this.state.currentRound;
+        return statedto;
     }
 
 
@@ -159,7 +171,7 @@ export class Game extends React.Component<{}, State> {
     }
 
     next() {
-        const currentSet = this.state.currentSet;  
+        const currentSet = this.state.currentSet;
         const nextSet = currentSet % 6;
         this.setState({
             YatzySets: this.state.YatzySets,
@@ -228,6 +240,8 @@ export class Game extends React.Component<{}, State> {
                     backspace={() => this.removeDice()}
                     scratch={() => this.scratch()}
                     clear={() => this.clearBoard()}
+                    setGroup={(name) => this.updateGroupName(name)}
+                    groupName={this.state.groupName ?? ""}
                 />
             </div>
         );

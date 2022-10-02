@@ -12,6 +12,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import Clear from './Clear';
+import GroupName from './GroupName';
 
 const size = "min(6vw, 1cm)"
 const screenfull = require('screenfull');
@@ -25,7 +26,7 @@ export function ButtonBar(props: Props) {
     const handleClose = () => {
         setAnchorEl(null);
 
-        
+
     };
 
     // enabling fullscreen has to be done after some user input
@@ -64,8 +65,10 @@ export function ButtonBar(props: Props) {
                         'aria-labelledby': 'basic-button',
                     }}
                 >
-                   <Clear clear={props.clear}/>
-                    <MenuItem onClick={() => {toggleFullScreen(); handleClose() }}>
+
+                    <GroupName setGroup={gn => {props.setGroup(gn); handleClose()}} currentGroup={props.groupName}/>
+                    <Clear clear={() => {props.clear(); handleClose();}} />
+                    <MenuItem onClick={() => { toggleFullScreen(); handleClose() }}>
                         <ListItemIcon>
                             <FullscreenIcon fontSize="large" />
                         </ListItemIcon>
@@ -96,4 +99,6 @@ interface Props {
     backspace: () => void;
     scratch: () => void;
     clear: () => void;
+    setGroup: (name: string) => void;
+    groupName: string;
 }

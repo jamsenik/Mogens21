@@ -35,9 +35,7 @@ export class YatzySet {
     verify() {
         let p = this.roundsPlayed();
         if (this.left !== null && p !== 0) {
-            console.log("Left: " + this.left);
             let l = this.left.roundsPlayed();
-            console.log("p: " + p + " l: " + l);
             if (l !== p && l !== p + 1) {
                 return false;
             }
