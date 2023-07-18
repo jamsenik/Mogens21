@@ -230,7 +230,7 @@ export class Game extends React.Component<{}, State> {
                     </Table>
                 </TableContainer>
                 <div className="nederst">
-                    <div className="slag">
+                    <div >
                         {this.state.YatzySets[this.state.currentSet].round(this.state.currentRound).toArray()}
                     </div>
 
