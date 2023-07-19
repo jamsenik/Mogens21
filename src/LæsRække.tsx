@@ -1,5 +1,6 @@
 import {ResultatFelt} from './ResultatFelt'
 import { TableCell, TableRow } from '@mui/material';
+import React from 'react';
 
 export function LæsRække(props: Props) {
     return (
@@ -24,7 +25,7 @@ export function LæsRække(props: Props) {
 }
 
 function LæsFeltI(i: number, props: Props){
-    return <ResultatFelt Value={props.Tal[i].toString()} />;
+    return <ResultatFelt Value={props.Tal[i]} />;
 
 }
 

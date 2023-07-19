@@ -46,7 +46,7 @@ export class Game extends React.Component<{}, State> {
 
         ListenToRemoteState((game: GameState) => this.updateState(game));
         console.log("End of constructor", this);
-        
+
     }
 
     updateState(game: GameState) {
@@ -82,7 +82,7 @@ export class Game extends React.Component<{}, State> {
 
         } as State;
         this.setState(newState, () => this.storeBoard());
-        
+
     }
 
     rowFunc(round: number): (p: number) => void {
@@ -170,6 +170,26 @@ export class Game extends React.Component<{}, State> {
         );
     }
 
+    rank(player: number) : number {
+        const set = this.state.YatzySets[player];
+        if (set.roundsPlayed() === 0){
+            return -1;
+        }
+        const score = set.score();
+        const better =  this.state.YatzySets.reduce((n, r) =>  n + (r.roundsPlayed() > 0 && r.score() > score ? 1 : 0), 0);
+        return better + 1;
+    }
+
+    behind(player: number): number {
+        const set = this.state.YatzySets[player];
+        if (set.roundsPlayed() === 0){
+            return 0;
+        }
+        const score = set.score();
+        const max =  Math.max(...this.state.YatzySets.map(ys => ys.score()));
+        return score - max;
+    }
+
     next() {
         const currentSet = this.state.currentSet;
         const nextSet = currentSet % 6;
@@ -204,7 +224,10 @@ export class Game extends React.Component<{}, State> {
                     <Table size="small" sx={{ minWidth: 200 }} aria-label="simple table">
                         <Navne valid={this.state.YatzySets.map(ys => ys.verify())}
                             names={this.state.names}
-                            updateName={(name, index) => this.updateName(name, index)} />
+                            updateName={(name, index) => this.updateName(name, index)} 
+                            rank={player => this.rank(player)}
+                            behind={player => this.behind(player)}
+                            />
                         <TableBody>
                             {this.række(0, "1")}
                             {this.række(1, "2")}
@@ -212,7 +235,7 @@ export class Game extends React.Component<{}, State> {
                             {this.række(3, "4")}
                             {this.række(4, "5")}
                             {this.række(5, "6")}
-                            <LæsRække Slags="Bonus" Tal={this.state.YatzySets.map(ys => ys.bonus())}></LæsRække>
+                            <LæsRække Slags="Bonus" Tal={this.state.YatzySets.map(ys => ys.bonusResult())}></LæsRække>
                             {this.række(6, "1 par")}
                             {this.række(7, "2 par")}
                             {this.række(8, "3 par")}
@@ -229,11 +252,13 @@ export class Game extends React.Component<{}, State> {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <div className="nederst">
-                    <div >
-                        {this.state.YatzySets[this.state.currentSet].round(this.state.currentRound).toArray()}
-                    </div>
+                <div className='nederst'>
+                    <div className="slag">
+                        <div >
+                            {this.state.YatzySets[this.state.currentSet].round(this.state.currentRound).toArray()}
+                        </div>
 
+                    </div>
                 </div>
                 <ButtonBar diceClick={(i: number) => { this.addDice(i) }}
                     diceEnabled={i => this.state.YatzySets[this.state.currentSet].round(this.state.currentRound).canBeNext(i)}

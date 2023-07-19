@@ -1,3 +1,4 @@
+
 export class YatzySet {
     rounds: Round[];
     left: YatzySet | null;
@@ -68,6 +69,20 @@ export class YatzySet {
     bonus(): number {
         return this.isTopSet() && this.rounds.slice(0, 6).reduce((sum, r) => sum + r.score(), 0) >= 0 ? 50 : 0;
     }
+
+    topDifference(): number {
+        return this.rounds.slice(0,6).reduce((sum, r) => sum + (r.blank() ? 0 : r.score()), 0);
+    }
+
+    bonusResult(): number {
+       const bonus = this.bonus()
+       if (bonus > 0 ){
+        return bonus;
+       } else {
+        return this.topDifference();
+       }
+    }
+
 
     isTopSet(): boolean {
         const ts = this.rounds.slice(0, 6).every(round => !round.blank());
