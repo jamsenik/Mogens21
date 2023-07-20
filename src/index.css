@@ -99,6 +99,9 @@ body {
     background-color: red;
 }
 
+.touch {
+    touch-action: none;
+}
 
 
 .øverst {

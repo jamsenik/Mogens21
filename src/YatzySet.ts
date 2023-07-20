@@ -181,8 +181,8 @@ export class Round {
     }
   }
 
-  toArray(): string {
-    return this.cubes.join("");
+  toArray(): number[] {
+    return this.cubes;
   }
 
   toString(): string {

@@ -9,8 +9,8 @@ export function ShortCuts(props: Props) {
         FOUR: "4",
         FIVE: "5",
         SIX: "6",
-        BACK_SPACE: "del backspace",
-        NEXT: "space ctrl+m"
+        BACK_SPACE: "backspace",
+        NEXT: "space"
     };
 
     const one : (keyEvent?: KeyboardEvent) => void = (event) => {
