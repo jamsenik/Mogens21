@@ -1,21 +1,14 @@
 {
   "files": {
-    "main.css": "/Mogens21/static/css/main.5db6d91f.chunk.css",
-    "main.js": "/Mogens21/static/js/main.4f18e87a.chunk.js",
-    "main.js.map": "/Mogens21/static/js/main.4f18e87a.chunk.js.map",
-    "runtime-main.js": "/Mogens21/static/js/runtime-main.f8d49cf5.js",
-    "runtime-main.js.map": "/Mogens21/static/js/runtime-main.f8d49cf5.js.map",
-    "static/js/2.a1117a34.chunk.js": "/Mogens21/static/js/2.a1117a34.chunk.js",
-    "static/js/2.a1117a34.chunk.js.map": "/Mogens21/static/js/2.a1117a34.chunk.js.map",
+    "main.css": "/Mogens21/static/css/main.aadeed50.css",
+    "main.js": "/Mogens21/static/js/main.8a654eb0.js",
+    "static/media/Mogens-Dice.woff2": "/Mogens21/static/media/Mogens-Dice.b647f224a0307449fb08.woff2",
     "index.html": "/Mogens21/index.html",
-    "static/css/main.5db6d91f.chunk.css.map": "/Mogens21/static/css/main.5db6d91f.chunk.css.map",
-    "static/js/2.a1117a34.chunk.js.LICENSE.txt": "/Mogens21/static/js/2.a1117a34.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/Mogens21/static/media/Mogens-Dice.b647f224.woff2"
+    "main.aadeed50.css.map": "/Mogens21/static/css/main.aadeed50.css.map",
+    "main.8a654eb0.js.map": "/Mogens21/static/js/main.8a654eb0.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.f8d49cf5.js",
-    "static/js/2.a1117a34.chunk.js",
-    "static/css/main.5db6d91f.chunk.css",
-    "static/js/main.4f18e87a.chunk.js"
+    "static/css/main.aadeed50.css",
+    "static/js/main.8a654eb0.js"
   ]
 }
