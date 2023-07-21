@@ -11,7 +11,9 @@ export function ShortCuts(props: Props) {
         SIX: "6",
         BACK_SPACE: "backspace",
         NEXT: ["space", "right"],
-        PREVIOUS: ["left"]
+        PREVIOUS: ["left"],
+        UP: "up",
+        DOWN: "down"
 
     };
 
@@ -49,6 +51,12 @@ export function ShortCuts(props: Props) {
         props.previous();
     };
 
+    const up = () => {
+        props.up();
+    };
+    const down = () => {
+        props.down();
+    };
 
     const handlers = {
         ONE: one,
@@ -59,7 +67,9 @@ export function ShortCuts(props: Props) {
         SIX: six,
         BACK_SPACE: backspace,
         NEXT: next,
-        PREVIOUS: previous
+        PREVIOUS: previous,
+        UP: up,
+        DOWN: down
 
     };
     return (
@@ -74,4 +84,6 @@ interface Props {
     // clear: () => void;
     next: () => void;
     previous: () => void;
+    up: () => void;
+    down: () => void;
 }

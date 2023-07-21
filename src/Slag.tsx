@@ -11,7 +11,7 @@ export function Slag(props: Props) {
         props.Next();
       }
     },
-    { axis: "x", swipe: { distance: 75, velocity: 0.1 } }
+    { axis: "x", swipe: { distance: 25, velocity: 0.01 } }
   );
 
   return (

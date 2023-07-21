@@ -85,6 +85,8 @@ export class Game extends React.Component<{}, State> {
       YatzySets: this.state.YatzySets,
       currentSet: p,
       currentRound: r,
+      previousRound: 0,
+      previousSet: 0,
       names: this.state.names,
     } as State;
     this.setState(newState, () => this.storeBoard());
@@ -238,7 +240,6 @@ export class Game extends React.Component<{}, State> {
 
   previous() {
     const currentSet = this.state.currentSet;
-    const currentRound = this.state.currentRound;
     const previousSet = this.state.previousSet;
     const previousRound = this.state.previousRound;
 
@@ -256,14 +257,79 @@ export class Game extends React.Component<{}, State> {
         r.blank()
       );
     }
-    
     this.setState(
       {
         YatzySets: this.state.YatzySets,
         currentSet: nextSet,
         currentRound: nextRound,
-        previousSet: currentSet,
-        previousRound: currentRound,
+        previousSet: 0,
+        previousRound: 0,
+        names: this.state.names,
+      },
+      () => this.storeBoard()
+    );
+  }
+
+  down(): void {
+    const currentSet = this.state.currentSet;
+    const currentRound = this.state.currentRound;
+    const previousSet = this.state.previousSet;
+    const previousRound = this.state.previousRound;
+
+    var nextSet = currentSet;
+    var nextRound = this.state.YatzySets[nextSet].rounds.findIndex(
+      (r, i) => r.blank() && i > currentRound
+    );
+
+    if (nextRound === -1) {
+      nextRound = currentRound;
+    }
+    console.log("Down: ", currentSet, currentRound, nextSet, nextRound);
+
+    this.setState(
+      {
+        YatzySets: this.state.YatzySets,
+        currentSet: nextSet,
+        currentRound: nextRound,
+        previousSet: previousSet,
+        previousRound: previousRound,
+        names: this.state.names,
+      },
+      () => this.storeBoard()
+    );
+  }
+  up(): void {
+    const currentSet = this.state.currentSet;
+    const currentRound = this.state.currentRound;
+    const previousSet = this.state.previousSet;
+    const previousRound = this.state.previousRound;
+
+    var nextSet = currentSet;
+
+    let nextRound = -1;
+    for (
+      let i = currentRound - 1;
+      i >= 0;
+      i--
+    ) {
+      if (this.state.YatzySets[nextSet].rounds[i].blank()) {
+        nextRound = i;
+        break;
+      }
+    }
+
+    if (nextRound === -1) {
+      nextRound = currentRound;
+    }
+
+    console.log("Down: ", currentSet, currentRound, nextSet, nextRound);
+    this.setState(
+      {
+        YatzySets: this.state.YatzySets,
+        currentSet: nextSet,
+        currentRound: nextRound,
+        previousSet: previousSet,
+        previousRound: previousRound,
         names: this.state.names,
       },
       () => this.storeBoard()
@@ -299,6 +365,8 @@ export class Game extends React.Component<{}, State> {
           // clear={() => this.clearBoard()}
           next={() => this.next()}
           previous={() => this.previous()}
+          up={() => this.up()}
+          down={() => this.down()}
         />
 
         <TableContainer component={Paper}>
