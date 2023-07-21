@@ -234,7 +234,7 @@ class UpperRound extends Round {
   }
 
   isIncomplete(): boolean {
-    return false;
+    return true;
   }
 }
 
@@ -252,7 +252,6 @@ class PatternRound extends Round {
   }
 
   add(dice: number) {
-    console.log("Adding: " + dice);
     if (this.isAPreviousValue(dice) || this.index >= this.pattern.length) {
       return;
     }
@@ -306,7 +305,7 @@ class PatternRound extends Round {
   }
 
   isIncomplete(): boolean {
-    return this.index !== 0 && this.index < this.pattern.length;
+    return this.index < this.pattern.length;
   }
 }
 
@@ -352,7 +351,8 @@ class FixedRound extends Round {
     return (this.set ? this.bonusPoints : 0) + super.score();
   }
 
-  ssIncomplete(): boolean {
-    return false;
+  isIncomplete(): boolean {
+    console.log("Set?", this.set);
+    return !this.set;
   }
 }

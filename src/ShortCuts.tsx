@@ -10,7 +10,9 @@ export function ShortCuts(props: Props) {
         FIVE: "5",
         SIX: "6",
         BACK_SPACE: "backspace",
-        NEXT: "space"
+        NEXT: ["space", "right"],
+        PREVIOUS: ["left"]
+
     };
 
     const one : (keyEvent?: KeyboardEvent) => void = (event) => {
@@ -41,9 +43,12 @@ export function ShortCuts(props: Props) {
         props.backspace();
     };
     const next = () => {
-        console.log("Next");
         props.next();
     };
+    const previous = () => {
+        props.previous();
+    };
+
 
     const handlers = {
         ONE: one,
@@ -53,7 +58,8 @@ export function ShortCuts(props: Props) {
         FIVE: five,
         SIX: six,
         BACK_SPACE: backspace,
-        NEXT: next
+        NEXT: next,
+        PREVIOUS: previous
 
     };
     return (
@@ -67,4 +73,5 @@ interface Props {
     // scratch: () => void;
     // clear: () => void;
     next: () => void;
+    previous: () => void;
 }

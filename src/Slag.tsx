@@ -4,19 +4,20 @@ import React from "react";
 export function Slag(props: Props) {
   const bind = useDrag(
     ({ swipe: [swipeX] }) => {
-      if (swipeX !== 0) {
-        props.Shift(swipeX)
+      if (swipeX === -1) {
+        props.Previous();
+      }
+      if (swipeX === 1) {
+        props.Next();
       }
     },
-    { axis: "x", swipe: { distance: 25, velocity: 0.1 } }
+    { axis: "x", swipe: { distance: 75, velocity: 0.1 } }
   );
 
   return (
     <div {...bind()} className="touch">
       <div className="nederst">
-        <div className="slag">
-{props.Slag}            
-        </div>
+        <div className="slag">{props.Slag}</div>
       </div>
     </div>
   );
@@ -24,7 +25,6 @@ export function Slag(props: Props) {
 
 interface Props {
   Slag: number[];
-  Shift: (delta: number) => void;
+  Next: () => void;
+  Previous: () => void;
 }
-
-
