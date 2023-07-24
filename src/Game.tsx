@@ -79,8 +79,6 @@ export class Game extends React.Component<{}, State> {
   }
 
   handleClick(p: number, r: number) {
-    var set = this.state.YatzySets[p];
-    set.round(r);
     const newState = {
       YatzySets: this.state.YatzySets,
       currentSet: p,
@@ -90,6 +88,18 @@ export class Game extends React.Component<{}, State> {
       names: this.state.names,
     } as State;
     this.setState(newState, () => this.storeBoard());
+  }
+
+  setRound (round: number){
+    const newState = {
+        YatzySets: this.state.YatzySets,
+        currentSet: this.state.currentSet,
+        currentRound: round,
+        previousRound: this.state.previousRound,
+        previousSet: this.state.previousSet,
+        names: this.state.names,
+      } as State;
+      this.setState(newState, () => this.storeBoard());  
   }
 
   rowFunc(round: number): (p: number) => void {
@@ -128,7 +138,7 @@ export class Game extends React.Component<{}, State> {
       this.state.currentRound
     );
     currentRound.scratch();
-    this.setState(this.state, () => this.storeBoard());
+    this.next();
   }
 
   clearBoard() {
@@ -222,9 +232,9 @@ export class Game extends React.Component<{}, State> {
       (s) => !s.match("Spiller")
     ).length;
     const nextSet = (currentSet + 1) % numberOfPlayers;
-    const nextRound = this.state.YatzySets[nextSet].rounds.findIndex((r) =>
+    const nextRound = Math.max(this.state.YatzySets[nextSet].rounds.findIndex((r) =>
       r.blank()
-    );
+    ), 0);
     this.setState(
       {
         YatzySets: this.state.YatzySets,
@@ -347,7 +357,9 @@ export class Game extends React.Component<{}, State> {
           .blank()}
         currentRound={this.state.YatzySets[this.state.currentSet].round(
           this.state.currentRound
-        )}
+        )
+        }
+        setRound={() => this.setRound(round)}
       />
     );
   }

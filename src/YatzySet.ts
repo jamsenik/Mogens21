@@ -204,7 +204,7 @@ export class Round {
   }
 
   isIncomplete(): boolean {
-    return this.cubes.length > 0 && this.cubes.length < 6;
+    return !this.scrathed && this.cubes.length > 0 && this.cubes.length < 6;
   }
 }
 
@@ -234,7 +234,7 @@ class UpperRound extends Round {
   }
 
   isIncomplete(): boolean {
-    return true;
+    return !this.scrathed && this.cubes.length < 6;
   }
 }
 
@@ -305,7 +305,7 @@ class PatternRound extends Round {
   }
 
   isIncomplete(): boolean {
-    return this.index < this.pattern.length;
+    return !this.scrathed && this.index < this.pattern.length;
   }
 }
 
@@ -352,7 +352,6 @@ class FixedRound extends Round {
   }
 
   isIncomplete(): boolean {
-    console.log("Set?", this.set);
-    return !this.set;
+    return !this.scrathed && !this.set;
   }
 }
