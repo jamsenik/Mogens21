@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/Mogens21/static/css/main.aadeed50.css",
-    "main.js": "/Mogens21/static/js/main.8a654eb0.js",
+    "main.js": "/Mogens21/static/js/main.e97a5388.js",
     "static/media/Mogens-Dice.woff2": "/Mogens21/static/media/Mogens-Dice.b647f224a0307449fb08.woff2",
     "index.html": "/Mogens21/index.html",
     "main.aadeed50.css.map": "/Mogens21/static/css/main.aadeed50.css.map",
-    "main.8a654eb0.js.map": "/Mogens21/static/js/main.8a654eb0.js.map"
+    "main.e97a5388.js.map": "/Mogens21/static/js/main.e97a5388.js.map"
   },
   "entrypoints": [
     "static/css/main.aadeed50.css",
-    "static/js/main.8a654eb0.js"
+    "static/js/main.e97a5388.js"
   ]
 }
