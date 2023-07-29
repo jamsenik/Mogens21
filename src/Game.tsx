@@ -373,7 +373,7 @@ export class Game extends React.Component<{}, State> {
           }}
           // diceEnabled={i => this.state.currentRound.canBeNext(i)}
           backspace={() => this.removeDice()}
-          // scratch={() => this.scratch()}
+          scratch={() => this.scratch()}
           // clear={() => this.clearBoard()}
           next={() => this.next()}
           previous={() => this.previous()}

@@ -9,6 +9,7 @@ export function ShortCuts(props: Props) {
         FOUR: "4",
         FIVE: "5",
         SIX: "6",
+        X: "x",
         BACK_SPACE: "backspace",
         NEXT: ["space", "right"],
         PREVIOUS: ["left"],
@@ -57,6 +58,10 @@ export function ShortCuts(props: Props) {
     const down = () => {
         props.down();
     };
+    const scratch = () => {
+        props.scratch();
+    };
+    
 
     const handlers = {
         ONE: one,
@@ -69,7 +74,8 @@ export function ShortCuts(props: Props) {
         NEXT: next,
         PREVIOUS: previous,
         UP: up,
-        DOWN: down
+        DOWN: down,
+        X: scratch
 
     };
     return (
@@ -80,7 +86,7 @@ interface Props {
     diceClick: (i: number) => void;
     // diceEnabled: (i: number) => boolean;
     backspace: () => void;
-    // scratch: () => void;
+    scratch: () => void;
     // clear: () => void;
     next: () => void;
     previous: () => void;
