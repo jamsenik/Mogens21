@@ -3,6 +3,12 @@ import { Round } from "./YatzySet";
 import React from "react";
 
 export function Felt(props: Props) {
+  var bgcolor  = "";
+  if (props.Round === props.CurrentRound){
+    bgcolor = "primary.main";
+  } else if (props.Round.isIncomplete() && !props.Round.blank()){
+    bgcolor = "secondary.main";
+  }
   return (
     <TableCell
       onClick={props.onClick}
@@ -11,7 +17,7 @@ export function Felt(props: Props) {
         paddingY: 0,
         minWidth: "10px",
         fontSize: "2.2vh",
-        bgcolor: props.Round === props.CurrentRound ? "primary.main" : null,
+        bgcolor: bgcolor,
       }}
       align="center"
     >
