@@ -234,7 +234,7 @@ class UpperRound extends Round {
   }
 
   isIncomplete(): boolean {
-    return !this.scrathed && this.cubes.length < 6;
+    return false;
   }
 }
 

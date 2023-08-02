@@ -58,9 +58,12 @@
   },
   "homepage": "https://jamsenik.github.io/Mogens21",
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/preval.macro": "^3.0.0",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
     "gh-pages": "^5.0.0",
-    "prettier": "^3.0.0"
+    "prettier": "^3.0.0",
+    "preval.macro": "^5.0.0"
   }
 }

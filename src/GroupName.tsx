@@ -1,13 +1,12 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogTitle from '@mui/material/DialogTitle';
-import { ListItemIcon, MenuItem, TextField } from '@mui/material';
-import GroupIcon from '@mui/icons-material/Group';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+import { ListItemIcon, MenuItem, TextField } from "@mui/material";
+import GroupIcon from "@mui/icons-material/Group";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 
 interface Props {
   setGroup: (name: string) => void;
@@ -40,9 +39,7 @@ export default function GroupName(props: Props) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle >
-          {"Hvilken gruppe"}
-        </DialogTitle>
+        <DialogTitle>{"Hvilken gruppe"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Hvad kalder I den gruppe der spiller?
@@ -59,7 +56,14 @@ export default function GroupName(props: Props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Bliv</Button>
-          <Button onClick={() => { props.setGroup(group); handleClose() }}>Skift</Button>
+          <Button
+            onClick={() => {
+              props.setGroup(group);
+              handleClose();
+            }}
+          >
+            Skift
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

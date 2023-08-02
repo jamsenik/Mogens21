@@ -13,6 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import Clear from "./Clear";
 import GroupName from "./GroupName";
+import Info from "./Info";
 
 const size = "min(6vw, 1cm)";
 const screenfull = require("screenfull");
@@ -98,6 +99,7 @@ export function ButtonBar(props: Props) {
                 <FullscreenIcon fontSize="large" />
               </ListItemIcon>
             </MenuItem>
+            <Info />
           </Menu>
           <Box sx={{ flexGrow: 1 }} />
         </Toolbar>
