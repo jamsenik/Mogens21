@@ -228,10 +228,13 @@ export class Game extends React.Component<{}, State> {
   next() {
     const currentSet = this.state.currentSet;
     const currentRound = this.state.currentRound;
-    const numberOfPlayers = this.state.names.filter(
-      (s) => !s.match("Spiller")
-    ).length;
+    const numberOfPlayers = Math.max(
+      this.state.names.filter((s) => !s.match("Spiller")).length,
+      1
+    );
     const nextSet = (currentSet + 1) % numberOfPlayers;
+    console.log("nextSet: " + nextSet);
+
     const nextRound = Math.max(
       this.state.YatzySets[nextSet].rounds.findIndex((r) => r.blank()),
       0

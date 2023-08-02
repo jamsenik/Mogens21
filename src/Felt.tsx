@@ -6,7 +6,7 @@ export function Felt(props: Props) {
   var bgcolor  = "";
   if (props.Round === props.CurrentRound){
     bgcolor = "primary.main";
-  } else if (props.Round.isIncomplete() && !props.Round.blank()){
+  } else if (props.Round.isWrong()){
     bgcolor = "secondary.main";
   }
   return (
