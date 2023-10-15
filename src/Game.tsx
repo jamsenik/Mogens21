@@ -117,7 +117,7 @@ export class Game extends React.Component<{}, State> {
     );
     if (currentRound.canBeNext(i)) {
       currentRound.add(i);
-      if (!currentRound.isIncomplete()) {
+      if (currentRound.isComplete()) {
         this.next();
       } else {
         this.setState(this.state, () => this.storeBoard());
@@ -229,7 +229,7 @@ export class Game extends React.Component<{}, State> {
     const currentSet = this.state.currentSet;
     const currentRound = this.state.currentRound;
     const numberOfPlayers = Math.max(
-      this.state.names.filter((s) => !s.match("Spiller")).length,
+      this.state.names.filter((s, i) => !s.match("Spiller") || this.state.YatzySets[i].playedRounds().length > 0).length,
       1
     );
     const nextSet = (currentSet + 1) % numberOfPlayers;
@@ -392,6 +392,7 @@ export class Game extends React.Component<{}, State> {
               updateName={(name, index) => this.updateName(name, index)}
               rank={(player) => this.rank(player)}
               behind={(player) => this.behind(player)}
+              roundsPlayed={this.state.YatzySets.map((ys) => ys.roundsPlayed())}
             />
             <TableBody>
               {this.række(0, "1")}

@@ -207,9 +207,14 @@ export class Round {
     return !this.scrathed && this.cubes.length > 0 && this.cubes.length < 6;
   }
 
-  isWrong(): boolean {
-    return this.cubes.length > 0 && this.cubes.length < 6 && !this.scrathed;
+  isComplete(): boolean {
+    return this.cubes.length === 6 || this.scrathed;
   }
+
+  isWrong(): boolean {
+    return this.cubes.length < 6 && this.cubes.length > 0 && !this.scrathed;
+  }
+
 }
 
 class UpperRound extends Round {
@@ -238,12 +243,17 @@ class UpperRound extends Round {
   }
 
   isIncomplete(): boolean {
-    return !this.scrathed && this.cubes.length < 6;
+    return !this.scrathed && this.cubes.length === 0;
+  }
+
+  isComplete(): boolean {
+    return this.cubes.length === 6 || this.scrathed;
   }
 
   isWrong(): boolean {
     return false;
   }
+
 }
 
 class PatternRound extends Round {
@@ -316,13 +326,12 @@ class PatternRound extends Round {
     return !this.scrathed && this.index < this.pattern.length;
   }
 
+  isComplete(): boolean {
+    return  !this.isIncomplete();
+  }
+
   isWrong(): boolean {
-    var wrong = !this.blank() && this.isIncomplete();
-    if (wrong) {
-      console.log("wrong", this.pattern, this.kind, this.index);
-      ;
-    } 
-    return wrong;
+    return !this.scrathed && this.index > 0 && this.index < this.pattern.length;
   }
 
 }
@@ -371,6 +380,10 @@ class FixedRound extends Round {
 
   isIncomplete(): boolean {
     return !this.scrathed && !this.set;
+  }
+
+  isComplete(): boolean {
+    return !this.isIncomplete();
   }
 
   isWrong(): boolean {

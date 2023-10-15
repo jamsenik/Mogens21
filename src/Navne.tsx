@@ -7,6 +7,7 @@ interface Props {
     updateName: (name: string, index: number) => void;
     rank: (player: number) => number;
     behind: (player: number) => number;
+    roundsPlayed: number[];
 }
 
 function Navn(i: number, props: Props) {
@@ -18,7 +19,7 @@ function Navn(i: number, props: Props) {
         <TextField
             value={theName}
             error={!props.valid[i]}
-            helperText={!props.valid[i] ? "FEJL" : ""}
+            helperText={!props.valid[i] ? props.roundsPlayed[i] + " udfyldt": ""}
             size="small"
             onFocus={event => {
                 event.target.select();
