@@ -22,6 +22,7 @@ interface State {
   previousRound: number;
   names: string[];
   groupName?: string;
+  pietRules: boolean;
 }
 
 function clearSets(): YatzySet[] {
@@ -42,12 +43,12 @@ export class Game extends React.Component<{}, State> {
     super(props);
     let emptySets = clearSets();
     const names = [
-      "Spiller 1",
-      "Spiller 2",
-      "Spiller 3",
-      "Spiller 4",
-      "Spiller 5",
-      "Spiller 6",
+      "Spiller",
+      "Spiller",
+      "Spiller",
+      "Spiller",
+      "Spiller",
+      "Spiller",
     ];
     this.state = {
       YatzySets: emptySets,
@@ -57,6 +58,7 @@ export class Game extends React.Component<{}, State> {
       previousRound: 0,
       names: names,
       groupName: undefined,
+      pietRules: false
     };
 
     ListenToRemoteState((game: GameState) => this.updateState(game));
@@ -72,8 +74,8 @@ export class Game extends React.Component<{}, State> {
     }
     this.setState({
       YatzySets: storedSets,
-      currentSet: game.currentPlayer,
-      currentRound: game.currentRound,
+      // currentSet: game.currentPlayer,
+      // currentRound: game.currentRound,
       names: game.names,
     });
   }
@@ -87,7 +89,7 @@ export class Game extends React.Component<{}, State> {
       previousSet: 0,
       names: this.state.names,
     } as State;
-    this.setState(newState, () => this.storeBoard());
+    this.setState(newState);
   }
 
   setRound(round: number) {
@@ -151,6 +153,16 @@ export class Game extends React.Component<{}, State> {
     } as State;
     this.setState(newState, () => this.storeBoard());
   }
+
+  togglePietRules() {
+    var pietRules = this.state.pietRules
+    console.log("Setting Piet rules", pietRules);
+    
+    this.setState({
+      pietRules: !pietRules
+    });
+  }
+
 
   updateName(name: string, index: number) {
     const newState = { ...this.state };
@@ -393,6 +405,7 @@ export class Game extends React.Component<{}, State> {
               rank={(player) => this.rank(player)}
               behind={(player) => this.behind(player)}
               roundsPlayed={this.state.YatzySets.map((ys) => ys.roundsPlayed())}
+              pietRules={this.state.pietRules}
             />
             <TableBody>
               {this.række(0, "1")}
@@ -445,6 +458,7 @@ export class Game extends React.Component<{}, State> {
           clear={() => this.clearBoard()}
           setGroup={(name) => this.updateGroupName(name)}
           groupName={this.state.groupName ?? ""}
+          togglePietRules={() => this.togglePietRules()}
         />
       </div>
     );

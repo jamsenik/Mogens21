@@ -35,7 +35,7 @@ export function ListenToRemoteState(callback: (game: GameState) => void) {
 }
 
 export function ListenToRemoteStateUpdate(callback: (game: GameState) => void, currentState: GameState, groupname: string ) {
-        console.log("Group is", groupname);
+        console.log("Group is: ", groupname);
         documentName = groupname;
         subscribe(groupname, currentState, callback );
 }
