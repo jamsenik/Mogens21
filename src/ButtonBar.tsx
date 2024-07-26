@@ -11,10 +11,10 @@ import { ButtonGroup, ListItemIcon } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
-import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import Clear from "./Clear";
 import GroupName from "./GroupName";
 import Info from "./Info";
+import RuleSet from "./RuleSet";
 
 const size = "min(6vw, 1cm)";
 const screenfull = require("screenfull");
@@ -100,16 +100,7 @@ export function ButtonBar(props: Props) {
                 <FullscreenIcon fontSize="large" />
               </ListItemIcon>
             </MenuItem>
-            <MenuItem
-              onClick={() => {
-                props.togglePietRules();
-                handleClose();
-              }}
-            >
-              <ListItemIcon>
-                <SportsScoreIcon fontSize="large" />
-              </ListItemIcon>
-            </MenuItem>
+            <RuleSet pietRules={props.pietRules} togglePietRules={() => props.togglePietRules()}/>
             <Info currentGroup={props.groupName}/>
           </Menu>
           <Box sx={{ flexGrow: 1 }} />
@@ -141,4 +132,5 @@ interface Props {
   setGroup: (name: string) => void;
   groupName: string;
   togglePietRules: () => void;
+  pietRules: boolean;
 }

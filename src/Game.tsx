@@ -459,6 +459,7 @@ export class Game extends React.Component<{}, State> {
           setGroup={(name) => this.updateGroupName(name)}
           groupName={this.state.groupName ?? ""}
           togglePietRules={() => this.togglePietRules()}
+          pietRules={this.state.pietRules}
         />
       </div>
     );
