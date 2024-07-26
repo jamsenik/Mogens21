@@ -40,6 +40,7 @@ function FeltI(i: number, props: Props) {
       onClick={() => props.onClick(i)}
       Round={props.rounds[i]}
       CurrentRound={props.currentRound}
+      pietRules = {props.pietRules}
     />
   );
 }
@@ -51,4 +52,5 @@ interface Props {
   available: boolean;
   currentRound: Round;
   setRound: () => void;
+  pietRules: boolean;
 }

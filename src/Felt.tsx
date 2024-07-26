@@ -8,7 +8,10 @@ export function Felt(props: Props) {
     bgcolor = "primary.main";
   } else if (props.Round.isWrong()){
     bgcolor = "secondary.main";
+  } else if (props.pietRules && props.Round.cubes.length > 0){
+    bgcolor =  "palegreen"
   }
+  const label = props.pietRules ? "" : props.Round?.toString() + " "
   return (
     <TableCell
       onClick={props.onClick}
@@ -21,7 +24,7 @@ export function Felt(props: Props) {
       }}
       align="center"
     >
-      {props.Round?.toString() + " "}
+      {label}
     </TableCell>
   );
 }
@@ -30,4 +33,5 @@ interface Props {
   onClick: () => void;
   Round: Round;
   CurrentRound: Round;
+  pietRules: boolean;
 }

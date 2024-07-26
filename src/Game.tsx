@@ -375,6 +375,7 @@ export class Game extends React.Component<{}, State> {
           this.state.currentRound
         )}
         setRound={() => this.setRound(round)}
+        pietRules={this.state.pietRules}
       />
     );
   }
@@ -431,8 +432,8 @@ export class Game extends React.Component<{}, State> {
               {this.række(16, "Chance")}
               {this.række(17, "Yatzy")}
               <LæsRække
-                Slags="Total"
-                Tal={this.state.YatzySets.map((ys) => ys.score())}
+                Slags={this.state.pietRules ? "Rækker": "Total"}
+                Tal={this.state.YatzySets.map((ys) => this.state.pietRules ? ys.playedRounds().length : ys.score())}
               ></LæsRække>
             </TableBody>
           </Table>

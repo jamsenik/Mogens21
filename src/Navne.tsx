@@ -13,14 +13,14 @@ interface Props {
 
 function Navn(i: number, props: Props) {
     const theName = props.names[i];
-    const rank = props.rank(i) > 0 && !props.pietRules ? props.rank(i) : ""
-    const delta = props.behind(i) < 0 && !props.pietRules ? " (" + props.behind(i) + ")" : "";
-    const label = rank  + delta;
+    const rank = props.rank(i) > 0 ? props.rank(i) : ""
+    const delta = props.behind(i) < 0 ? " (" + props.behind(i) + ")" : "";
+    const label = props.pietRules? "" : rank  + delta;
     return <TableCell sx={{ paddingX: "2px", paddingY: "px", minWidth: "10px", paddingTop: "5px", maxHeight: "2vh" }}>
         <TextField
             value={theName}
             error={!props.valid[i] && !props.pietRules}
-            helperText={!props.valid[i] || props.pietRules ? props.roundsPlayed[i] + " udfyldt": ""}
+            helperText={!props.valid[i] && !props.pietRules ? props.roundsPlayed[i] + " udfyldt": ""}
             size="small"
             onFocus={event => {
                 event.target.select();
